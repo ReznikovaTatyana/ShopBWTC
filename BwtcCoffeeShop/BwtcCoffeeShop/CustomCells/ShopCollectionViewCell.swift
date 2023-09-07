@@ -131,8 +131,6 @@ class ShopCollectionViewCell: UICollectionViewCell {
         grindPicker.dataSource = self
     }
     
-    
-    
     func config(path: String) {
         if let url = URL(string: path),
            let data = try? Data(contentsOf: url),
@@ -250,7 +248,4 @@ extension ShopCollectionViewCell: UIPickerViewDelegate, UIPickerViewDataSource {
         let selectedRoast = grindModel.tipeGrind[row].grind
         pickerText.text = selectedRoast
     }
-
-
-
 }

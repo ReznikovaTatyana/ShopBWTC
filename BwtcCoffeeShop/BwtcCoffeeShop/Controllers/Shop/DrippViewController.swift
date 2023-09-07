@@ -10,7 +10,6 @@ import UIKit
 class DrippViewController: UIViewController {
     
     var drippCollectionView: UICollectionView = {
-
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
             layout.minimumLineSpacing = 10
@@ -70,7 +69,6 @@ extension DrippViewController: UICollectionViewDataSource, UICollectionViewDeleg
             itemCell.shop = drippCell.drippArray[indexPath.item]
             return itemCell
         }
-        
         return UICollectionViewCell()
     }
     
@@ -83,8 +81,8 @@ extension DrippViewController: UICollectionViewDataSource, UICollectionViewDeleg
             detailViewController.labelPrice.text = menuDripp.drippPrice.text
             detailViewController.textLabel.text = menuDripp.textLabel.text
             navigationController?.pushViewController(detailViewController, animated: true)
+        }
     }
-}
 }
 
 extension DrippViewController:  UICollectionViewDelegateFlowLayout {

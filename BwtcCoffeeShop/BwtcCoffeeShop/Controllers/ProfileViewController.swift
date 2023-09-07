@@ -9,7 +9,6 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    
     let imageView = UIImageView()
     let image = UIImage(named: "Ethiopia Guji")
     let imageUrl: String = "https://static.wixstatic.com/media/6159d6_7a97d8f91e20495bbd44d528b9671542~mv2.png/v1/fill/w_964,h_964,al_c,usm_0.66_1.00_0.01/6159d6_7a97d8f91e20495bbd44d528b9671542~mv2.png"
@@ -21,7 +20,6 @@ class ProfileViewController: UIViewController {
         setupViews()
         createConstr()
         config(path: imageUrl)
-        
  }
     
     func config(path: String) {
@@ -29,8 +27,6 @@ class ProfileViewController: UIViewController {
            let data = try? Data(contentsOf: url),
            let image = UIImage(data: data) {
             imageView.image = image
-
-
         }
     }
 
@@ -40,10 +36,6 @@ class ProfileViewController: UIViewController {
         navigationItem.rightBarButtonItem = segmentLanguageItem
         navigationItem.titleView = logoImageItem
         view.addSubview(imageView)
-        
-        
-     
-        
     }
     
     func createConstr() {

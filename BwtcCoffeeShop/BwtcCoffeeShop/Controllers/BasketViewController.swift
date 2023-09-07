@@ -63,8 +63,8 @@ class BasketViewController: UIViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         setupViews()
-
 }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         myTableView.reloadData()
@@ -126,7 +126,6 @@ class BasketViewController: UIViewController {
         
     }
     
-    
 }
 
 extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
@@ -153,8 +152,6 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.reloadData()
         }
     }
-    
-    
 }
 
 extension BasketViewController: BasketTableViewCellDelegate {
@@ -165,13 +162,12 @@ extension BasketViewController: BasketTableViewCellDelegate {
         BasketModel.save(basketViewModel.positions)
             totalCoast = basketViewModel.positions.reduce(0) { $0 + $1.basketCoast}
             summLabel.text = "\(totalCoast) грн"
+            
+        }
+        
     }
-    }
-    }
-
-extension BasketViewController: UIPickerViewDelegate {
-    
 }
-    
+
+ 
 
 

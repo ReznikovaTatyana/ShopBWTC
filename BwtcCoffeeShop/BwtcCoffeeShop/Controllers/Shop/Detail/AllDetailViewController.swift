@@ -102,7 +102,6 @@ class AllDetailViewController: UIViewController {
             labelPrice.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
-            
         buyButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             buyButton.topAnchor.constraint(equalTo: labelPrice.bottomAnchor, constant: 10),
@@ -141,10 +140,8 @@ class AllDetailViewController: UIViewController {
         
     }
     
-    
-    
     @objc private func didStepperValueChanged() {
-      // print("latest value: \(customStepper.firstValue)")
+      
      }
 }
 

@@ -12,7 +12,6 @@ class ViewController: UIViewController {
     
    
     let imagePageControl = UIPageControl()
-    
     var imageCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -69,9 +68,6 @@ class ViewController: UIViewController {
     
     func createImageCollectionView() {
         view.addSubview(imageCollectionView)
-//        imageCollectionView.isPagingEnabled = true
-//
-//        imageCollectionView.reloadData()
      imageCollectionView.register(HomeImage.self, forCellWithReuseIdentifier: "HomeImage")
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
@@ -105,10 +101,9 @@ class ViewController: UIViewController {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         imagePageControl.currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
-        
     }
-    
 }
+
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -134,9 +129,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 return cell
             }
         }
-        
         return UICollectionViewCell()
     }
+    
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
         
         if let menu = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PopularProductsCell.self)", for: indexPath) as? PopularProductsCell {
@@ -148,7 +144,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             detailViewController.textLabel.text = menu.text.text
                      navigationController?.pushViewController(detailViewController, animated: true)
         }
-        }
+    }
     
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

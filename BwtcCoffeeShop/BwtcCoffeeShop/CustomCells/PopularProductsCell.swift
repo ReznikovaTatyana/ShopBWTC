@@ -22,8 +22,6 @@ class PopularProductsCell: UICollectionViewCell {
         return stack
     }()
     
-   
-      
     var products: Shop? {
         didSet {
             nameProducts.text = products?.name
@@ -53,10 +51,10 @@ class PopularProductsCell: UICollectionViewCell {
     func setup() {
         
         self.contentView.addSubview(container)
-        container.addArrangedSubview(imageProducts)
-        container.addArrangedSubview(nameProducts)
-        container.addArrangedSubview(priceProducts)
-//        [imageProducts, nameProducts, priceProducts].forEach(container.addArrangedSubview)
+//        container.addArrangedSubview(imageProducts)
+//        container.addArrangedSubview(nameProducts)
+//        container.addArrangedSubview(priceProducts)
+       [imageProducts, nameProducts, priceProducts].forEach(container.addArrangedSubview)
        
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),

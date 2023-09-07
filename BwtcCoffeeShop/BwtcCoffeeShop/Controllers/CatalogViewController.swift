@@ -9,7 +9,6 @@ import UIKit
 
 class CatalogViewController: UIViewController {
    
-    
     var collectionViewCatalog: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -99,9 +98,7 @@ extension CatalogViewController: UICollectionViewDataSource, UICollectionViewDel
         default: break
             
         }
-        
-}
-    
+    }
 }
 
 extension CatalogViewController:  UICollectionViewDelegateFlowLayout {

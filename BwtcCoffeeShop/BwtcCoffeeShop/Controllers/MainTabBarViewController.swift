@@ -17,7 +17,6 @@ class MainTabBarViewController: UITabBarController {
     
     
     func setupTabBar() {
-        
         let mainPageViewController = createController(vc: ViewController(), itemName: "Home" , itemImage: "house.fill")
         let catalogViewController = createController(vc: CatalogViewController(), itemName: "Shop", itemImage: "rectangle.grid.2x2")
         let basketViewController = createController(vc: BasketViewController(), itemName: "Bask", itemImage: "cart.fill")
@@ -36,8 +35,6 @@ class MainTabBarViewController: UITabBarController {
         let navContoller = UINavigationController(rootViewController: vc)
         navContoller.tabBarItem = item
         navContoller.navigationBar.scrollEdgeAppearance = navContoller.navigationBar.standardAppearance
-       
-        
         return navContoller
     }
     
@@ -48,7 +45,6 @@ class MainTabBarViewController: UITabBarController {
         tabBar.tintColor = .tabBarItemAccent
         tabBar.unselectedItemTintColor = .tabBarItemLight
         tabBar.backgroundColor = .mainOragge
-        
     }
     
     }

@@ -25,6 +25,7 @@ class CoffeeViewController: UIViewController {
     
     var contentCoffeeShopCell: ContentCoffeeShopCell = ContentCoffeeShopCell()
     let detailViewController = CoffeeDetailViewController()
+    
     lazy var sourse: [SectionCoffee] = [
      SectionCoffee(sectionName: "Pack 250gr", coffee: contentCoffeeShopCell.itemShopArray),
      SectionCoffee(sectionName: "Pack 1gr", coffee: contentCoffeeShopCell.bigPackArray) ]
@@ -130,11 +131,9 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
             default:
                 break
             }
-            
-        }
-        
         }
     }
+}
             
             
 extension CoffeeViewController:  UICollectionViewDelegateFlowLayout {
