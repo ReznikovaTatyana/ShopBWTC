@@ -8,11 +8,13 @@
 import UIKit
 
 class PopularProductsCell: UICollectionViewCell {
+   
     var imageProducts = UIImageView()
     var nameProducts = UILabel()
     var priceProducts = UILabel()
     var buyButton = UIButton()
     let text = UITextView()
+    
     var container: UIStackView = {
         let stack = UIStackView()
         stack.backgroundColor = .yellow
@@ -22,7 +24,8 @@ class PopularProductsCell: UICollectionViewCell {
         return stack
     }()
     
-    var products: Shop? {
+   
+    var products: Goods? {
         didSet {
             nameProducts.text = products?.name
             if let text = products?.price {
@@ -51,10 +54,10 @@ class PopularProductsCell: UICollectionViewCell {
     func setup() {
         
         self.contentView.addSubview(container)
-//        container.addArrangedSubview(imageProducts)
-//        container.addArrangedSubview(nameProducts)
-//        container.addArrangedSubview(priceProducts)
-       [imageProducts, nameProducts, priceProducts].forEach(container.addArrangedSubview)
+        container.addArrangedSubview(imageProducts)
+        container.addArrangedSubview(nameProducts)
+        container.addArrangedSubview(priceProducts)
+//        [imageProducts, nameProducts, priceProducts].forEach(container.addArrangedSubview)
        
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
@@ -104,5 +107,9 @@ class PopularProductsCell: UICollectionViewCell {
         ])
 
     }
+    
+    
+    
+    
     
     }

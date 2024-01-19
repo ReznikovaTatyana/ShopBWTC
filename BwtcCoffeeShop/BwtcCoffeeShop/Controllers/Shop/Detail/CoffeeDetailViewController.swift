@@ -7,7 +7,12 @@
 import SnapKit
 import UIKit
 
-final class CoffeeDetailViewController: UIViewController {
+protocol CoffeeDetailViewControllerProtocol {
+    var coffeeGoods: Goods? { get set }
+}
+final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewControllerProtocol {
+   
+    var coffeeGoods: Goods?
     
     var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -46,7 +51,7 @@ final class CoffeeDetailViewController: UIViewController {
         button.setTitleColor(UIColor.tabBarItemLight, for: .normal)
         button.backgroundColor = .mainOragge
         button.layer.cornerRadius = 12
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.addTarget(CoffeeDetailViewController.self, action: #selector(buttonAction), for: .touchUpInside)
         return button
     }()
     
@@ -58,13 +63,12 @@ final class CoffeeDetailViewController: UIViewController {
 
     let customStepper: CustomStepper = {
         let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+        stepper.addTarget(CoffeeDetailViewController.self, action: #selector(didStepperValueChanged), for: .valueChanged)
         return stepper
     }()
     
     var pickerText = UILabel()
     let grindModel = ModelGrind()
-    var shop: Shop?
     
 
    
@@ -89,7 +93,7 @@ final class CoffeeDetailViewController: UIViewController {
 
 
     func makeConstraints() {
-    
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
@@ -150,16 +154,24 @@ final class CoffeeDetailViewController: UIViewController {
     
     
     @objc private func  buttonAction() {
-            guard let image = shop?.imageName else {return}
-            guard let name = shop?.name  else {return}
-            guard let grindText = pickerText.text  else {return}
-            guard let price = shop?.price else {return}
+            guard let image = coffeeGoods?.imageName,
+                  let name = coffeeGoods?.name,
+                  let grindText = pickerText.text,
+                  let salePrice = coffeeGoods?.optPrice,
+                  let identifaer = coffeeGoods?.identifaer,
+                  let countDrip = coffeeGoods?.countDrip,
+                  let mass = coffeeGoods?.mass,
+                  let price = coffeeGoods?.price else {return}
             let position = BasketModel( basketImageName: image,
-                                    basketName: name,
-                                    basketGrind: grindText ,
-                                    basketPrice: price,
-                                    stepper: customStepper.firstValue,
-                                    basketCoast: customStepper.firstValue * price)
+                                        basketName: name,
+                                        basketGrind: grindText ,
+                                        basketPrice: price,
+                                        stepper: customStepper.firstValue,
+                                        basketCoast: price * customStepper.firstValue,
+                                        basketSalePrice: salePrice,
+                                        identifaer: identifaer,
+                                        countDrip: countDrip,
+                                        mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)
         grindPicker.reloadAllComponents()

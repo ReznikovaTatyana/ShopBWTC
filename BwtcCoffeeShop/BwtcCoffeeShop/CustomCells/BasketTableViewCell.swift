@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 
-protocol BasketTableViewCellDelegate: class {
-    func didStepperValueChanged(_ cell: BasketTableViewCell, coast: Int, step: Int)
+protocol BasketTableViewCellDelegate: AnyObject {
+    func didStepperValueChanged(_ cell: BasketTableViewCell, coast: Int, step: Int, label: UILabel)
 }
 
 class BasketTableViewCell: UITableViewCell {
@@ -48,51 +48,43 @@ class BasketTableViewCell: UITableViewCell {
         return cost
     }()
     
+    
     var customStepper: CustomStepper = {
         let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+        stepper.addTarget(BasketTableViewCell.self, action: #selector(didStepperValueChanged), for: .valueChanged)
         return stepper
     }()
     
-    var wrLabel: UILabel = {
-        let wr = UILabel()
-        wr.numberOfLines = 0
-        wr.font = UIFont.systemFont(ofSize: 14)
-        return wr
+    var costSaleLabel: UILabel = {
+        let costSaleLabel = UILabel()
+        costSaleLabel.numberOfLines = 0
+        costSaleLabel.textColor = .mainOragge
+        costSaleLabel.font = UIFont.systemFont(ofSize: 14)
+        return costSaleLabel
     }()
     
-  
     
     var position: BasketModel? {
         didSet {
-            if let image = position?.basketImageName {
-                basketImageView.image = UIImage(named: image)
-            }
-            if let text = position?.basketName {
-                nameLabel.text = text
-            }
-            if let text = position?.basketGrind {
-                grindLabel.text = text
-                
-            }
-            if let text1 = position?.basketPrice {
-                priceLabel.text = String(text1) + "грн"
-            }
-            if let text = position?.basketCoast {
-                costLabel.text = String(text) + "грн"
-            }
-            
-            if let stepper = position?.stepper {
-                customStepper.firstValue = stepper
-               
-                customStepper.counterLabel.text = String(stepper)
-            }
-            
-            if let coast = position?.basketCoast {
+            guard let image = position?.basketImageName,
+                  let nameText = position?.basketName,
+                  let grindText = position?.basketGrind,
+                  let priceText = position?.basketPrice,
+                  let stepper = position?.stepper,
+                  let text = position?.coastLabelSaleText,
+                  let coast = position?.basketCoast else {return}
                 costLabel.text = String(coast) + "грн"
+                basketImageView.image = UIImage(named: image)
+                nameLabel.text = nameText
+                grindLabel.text = grindText
+                priceLabel.text = String(priceText) + "грн"
+                costLabel.text = String(priceText * stepper) + "грн"
+                costSaleLabel.text = text
+                customStepper.firstValue = stepper
+                customStepper.counterLabel.text = String(stepper)
         }
     }
-    }
+    
    
 
     override func awakeFromNib() {
@@ -114,6 +106,7 @@ class BasketTableViewCell: UITableViewCell {
         contentView.addSubview(priceLabel)
         contentView.addSubview(costLabel)
         contentView.addSubview(customStepper)
+        contentView.addSubview(costSaleLabel)
     }
     
     func makeConstraints() {
@@ -146,36 +139,35 @@ class BasketTableViewCell: UITableViewCell {
             make.width.equalTo(90)
             make.top.equalToSuperview().inset(45)
         }
+        costSaleLabel.snp.makeConstraints { make in
+            make.left.equalTo(customStepper).inset(90)
+            make.width.equalTo(90)
+            make.top.equalTo(costLabel).inset(25)
+        }
         customStepper.snp.makeConstraints { make in
             make.left.equalTo(priceLabel).inset(120)
             make.width.equalTo(80)
             make.height.equalTo(30)
             make.top.equalToSuperview().inset(40)
         }
+    
+    
+        
     }
     
    
-    func updateCoast(coast:Int) {
-        let newCoast = String (coast)
-        costLabel.text = newCoast + "грн"
-        }
-
-    func newCoast(coast:Int) {
-        if var position = position {
-            //position.basketCoast = coast
-        }
-    }
-       
     
     @objc private func didStepperValueChanged(_ sender: UIStepper)  {
-        guard var coast = position?.basketCoast else {return}
-        guard let price = position?.basketPrice else {return}
-        coast = price * customStepper.firstValue
-        updateCoast(coast: coast)
-        newCoast(coast: coast)
-        delegate?.didStepperValueChanged(self, coast: coast, step: customStepper.firstValue)
+        guard let coast = position?.basketCoast,
+             let text = position?.coastLabelSaleText,
+              let stepper = position?.stepper,
+              let price = position?.basketPrice else {return}
+        costLabel.text = String (price * stepper) + "грн"
+        costSaleLabel.text = text
+        delegate?.didStepperValueChanged(self, coast: coast, step: customStepper.firstValue, label: costLabel)
         print(customStepper.firstValue)
         print(coast)
 }
-
+    
 }
+

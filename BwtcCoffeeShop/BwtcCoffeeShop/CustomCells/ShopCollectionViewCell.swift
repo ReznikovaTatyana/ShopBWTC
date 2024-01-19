@@ -58,7 +58,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
         button.backgroundColor = .mainOragge
         button.tintColor = .mainOragge
         button.layer.cornerRadius = 12
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.addTarget(ShopCollectionViewCell.self, action: #selector(buttonAction), for: .touchUpInside)
        return button
     }()
     
@@ -66,12 +66,12 @@ class ShopCollectionViewCell: UICollectionViewCell {
     let grindModel = ModelGrind()
     let customStepper: CustomStepper = {
     let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+        stepper.addTarget(ShopCollectionViewCell.self, action: #selector(didStepperValueChanged), for: .valueChanged)
         return stepper
     }()
   
    
-    var shop: Shop? {
+    var shop: Goods? {
         didSet {
             shopName.text = shop?.name
             if let text = shop?.price {
@@ -130,6 +130,8 @@ class ShopCollectionViewCell: UICollectionViewCell {
         grindPicker.delegate = self
         grindPicker.dataSource = self
     }
+    
+    
     
     func config(path: String) {
         if let url = URL(string: path),
@@ -196,16 +198,23 @@ class ShopCollectionViewCell: UICollectionViewCell {
 
     @objc func buttonAction() {
 
-        guard let image = shop?.imageName else {return}
-            guard let nameText = shopName.text  else {return}
-            guard let grindText = pickerText.text  else {return}
-            guard let price = shop?.price else {return}
-            let position = BasketModel(basketImageName: image,
-                                    basketName: nameText,
-                                    basketGrind: grindText ,
-                                    basketPrice: price,
-                                    stepper: customStepper.firstValue,
-                                    basketCoast: customStepper.firstValue * price)
+        guard let image = shop?.imageName,
+              let nameText = shopName.text,
+              let grindText = pickerText.text,
+              let salePrice = shop?.optPrice,
+              let countDrip = shop?.countDrip,
+              let identifaer = shop?.identifaer,
+              let mass = shop?.mass,
+              let price = shop?.price else {return}
+        let position = BasketModel(basketImageName: image,
+                                   basketName: nameText,
+                                   basketGrind: grindText ,
+                                   basketPrice: price,
+                                   stepper: customStepper.firstValue,
+                                   basketCoast: price * customStepper.firstValue, basketSalePrice: salePrice,
+                                   identifaer: identifaer,
+                                   countDrip: countDrip,
+                                   mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)
         grindPicker.reloadAllComponents()
@@ -248,4 +257,7 @@ extension ShopCollectionViewCell: UIPickerViewDelegate, UIPickerViewDataSource {
         let selectedRoast = grindModel.tipeGrind[row].grind
         pickerText.text = selectedRoast
     }
+
+
+
 }

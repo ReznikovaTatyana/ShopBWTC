@@ -15,15 +15,25 @@ class BasketModel: Codable {
     var basketPrice: Int
     var stepper: Int
     var basketCoast: Int
+    var basketSalePrice: Int
+    var mass: Int
+    var identifaer: Int
+    var countDrip: Int
+    var coastLabelText = ""
+    var coastLabelSaleText = ""
    
     
-    init(basketImageName: String, basketName: String, basketGrind: String,basketPrice: Int,stepper: Int,basketCoast: Int) {
+    init(basketImageName: String, basketName: String, basketGrind: String,basketPrice: Int,stepper: Int, basketCoast: Int, basketSalePrice: Int, identifaer: Int, countDrip: Int, mass: Int) {
         self.basketImageName = basketImageName
         self.basketName = basketName
         self.basketGrind = basketGrind
         self.basketPrice = basketPrice
         self.stepper = stepper
         self.basketCoast = basketCoast
+        self.basketSalePrice = basketSalePrice
+        self.identifaer = identifaer
+        self.countDrip = countDrip
+        self.mass = mass
        
     }
     //{
@@ -57,9 +67,32 @@ class BasketViewModel {
        self.positions.append(position)
         }
 //    }
-    
     }
-
+   
+    
+    func calculateSaleTotalCost() -> Int {
+        for position in positions {
+            switch position.identifaer {
+            case 1: if positions.reduce(0, { $0 + $1.mass * $1.stepper}) >= 3000 {
+                    position.basketCoast = position.basketSalePrice * position.stepper
+                position.coastLabelSaleText = String(position.basketSalePrice * position.stepper)
+                } else {
+                    position.basketCoast = position.basketPrice * position.stepper
+                    position.coastLabelSaleText = ""
+                }
+            case 2: if positions.reduce(0, { $0 + $1.countDrip * $1.stepper}) >= 50 {
+                position.basketCoast = position.basketSalePrice * position.stepper
+                position.coastLabelSaleText = String(position.basketSalePrice * position.stepper)
+            } else {
+                position.basketCoast = position.basketPrice * position.stepper
+                position.coastLabelSaleText = ""
+            }
+            default: break
+            }
+        }
+        return  positions.reduce(0) { $0 + $1.basketCoast }
+    }
+    
 func isContain(model: BasketModel) -> Bool {
     for item in positions {
         if item.basketGrind.count > 2 {
@@ -74,6 +107,9 @@ func isContain(model: BasketModel) -> Bool {
     }
     return false
 }
+    func removePosition(at index: Int) {
+        positions.remove(at: index)
+    }
     
 }
     
