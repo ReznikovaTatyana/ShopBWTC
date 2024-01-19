@@ -12,7 +12,7 @@ class CustomStepper: UIControl {
    
     var plusButton: UIButton = {
         let button = UIButton()
-        button.addTarget(self, action: #selector(buttonTappedPlus(_:)), for: .touchUpInside)
+        button.addTarget(CustomStepper.self, action: #selector(buttonTappedPlus(_:)), for: .touchUpInside)
         button.setTitle("+", for: .normal)
         button.layer.cornerRadius = 12
         button.setTitleColor(.tabBarItemLight, for: .normal)
@@ -23,7 +23,7 @@ class CustomStepper: UIControl {
     
     var minusButton: UIButton = {
         let button = UIButton()
-        button.addTarget(self, action: #selector(buttonTappedMinus(_:)), for: .touchUpInside)
+        button.addTarget(CustomStepper.self, action: #selector(buttonTappedMinus(_:)), for: .touchUpInside)
         button.setTitle("-", for: .normal)
         button.layer.cornerRadius = 12
         button.setTitleColor(.tabBarItemLight, for: .normal)
@@ -39,7 +39,7 @@ class CustomStepper: UIControl {
         return label
     }()
     
-   var firstValue = 1
+    var firstValue = 1
     
     private lazy var container: UIStackView = {
         let stack = UIStackView()
@@ -84,7 +84,7 @@ class CustomStepper: UIControl {
 
     func updateValuePlus(_ value: Int) {
         firstValue = value
-        if firstValue < viewData.maximum {
+        if  firstValue < viewData.maximum {
             firstValue += viewData.stepValue
        }
         counterLabel.text = String(firstValue)
@@ -94,7 +94,7 @@ class CustomStepper: UIControl {
     
     func updateValueMinus(_ value: Int) {
         firstValue = value
-        if firstValue < viewData.maximum, firstValue > viewData.minimum {
+        if firstValue <= viewData.maximum, firstValue > viewData.minimum {
             firstValue -= viewData.stepValue
         }
         counterLabel.text = String(firstValue)

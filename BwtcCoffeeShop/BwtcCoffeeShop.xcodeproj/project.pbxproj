@@ -30,7 +30,7 @@
 		04A4876F29F7B5BA006D36CC /* Ysabeau-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04A4876E29F7B5B9006D36CC /* Ysabeau-Italic.ttf */; };
 		04ADD71A29F1A01600C68331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD71929F1A01600C68331 /* AppDelegate.swift */; };
 		04ADD71C29F1A01600C68331 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD71B29F1A01600C68331 /* SceneDelegate.swift */; };
-		04ADD71E29F1A01600C68331 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD71D29F1A01600C68331 /* ViewController.swift */; };
+		04ADD71E29F1A01600C68331 /* FirstScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD71D29F1A01600C68331 /* FirstScreenViewController.swift */; };
 		04ADD72329F1A01800C68331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04ADD72229F1A01800C68331 /* Assets.xcassets */; };
 		04ADD72629F1A01800C68331 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04ADD72429F1A01800C68331 /* LaunchScreen.storyboard */; };
 		04ADD72F29F1A0ED00C68331 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD72E29F1A0ED00C68331 /* CatalogViewController.swift */; };
@@ -38,6 +38,8 @@
 		04ADD73329F1A18600C68331 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD73229F1A18600C68331 /* ProfileViewController.swift */; };
 		04ADD73529F28AED00C68331 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD73429F28AED00C68331 /* MainTabBarViewController.swift */; };
 		04ADD73729F2A4E300C68331 /* UIColorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADD73629F2A4E300C68331 /* UIColorExtention.swift */; };
+		04E8B7DA2B5AD0DC00E631A1 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8B7D92B5AD0DC00E631A1 /* HomeViewModel.swift */; };
+		04E8B7DE2B5AD43900E631A1 /* CatalogViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8B7DD2B5AD43900E631A1 /* CatalogViewControllerFactory.swift */; };
 		04EA96FF2A68039400FBA0E0 /* BasketUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA96FE2A68039400FBA0E0 /* BasketUserDefaults.swift */; };
 		04EC590E2A2A4BAD00F40105 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC590D2A2A4BAD00F40105 /* BasketTableViewCell.swift */; };
 		04EC59102A2A581200F40105 /* BasketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC590F2A2A581200F40105 /* BasketModel.swift */; };
@@ -67,7 +69,7 @@
 		04ADD71629F1A01600C68331 /* BwtcCoffeeShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BwtcCoffeeShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04ADD71929F1A01600C68331 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04ADD71B29F1A01600C68331 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		04ADD71D29F1A01600C68331 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		04ADD71D29F1A01600C68331 /* FirstScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenViewController.swift; sourceTree = "<group>"; };
 		04ADD72229F1A01800C68331 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04ADD72529F1A01800C68331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04ADD72729F1A01800C68331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +78,8 @@
 		04ADD73229F1A18600C68331 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		04ADD73429F28AED00C68331 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		04ADD73629F2A4E300C68331 /* UIColorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtention.swift; sourceTree = "<group>"; };
+		04E8B7D92B5AD0DC00E631A1 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewModel.swift; path = "../../../../../Documents/Курсы/Git repository/BwtcCoffeeShop/Models/HomeViewModel.swift"; sourceTree = "<group>"; };
+		04E8B7DD2B5AD43900E631A1 /* CatalogViewControllerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CatalogViewControllerFactory.swift; path = "../../../../../Documents/Курсы/Git repository/BwtcCoffeeShop/Models/Factory/CatalogViewControllerFactory.swift"; sourceTree = "<group>"; };
 		04EA96FE2A68039400FBA0E0 /* BasketUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketUserDefaults.swift; sourceTree = "<group>"; };
 		04EC590D2A2A4BAD00F40105 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		04EC590F2A2A581200F40105 /* BasketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketModel.swift; sourceTree = "<group>"; };
@@ -120,11 +124,13 @@
 		0429D25E29F538E50015EE90 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				04E8B7DD2B5AD43900E631A1 /* CatalogViewControllerFactory.swift */,
 				0476E9BE2AA0A21B0077EDA2 /* CatalogModel.swift */,
 				0429D26129F539890015EE90 /* ShopModel.swift */,
 				04EC590F2A2A581200F40105 /* BasketModel.swift */,
 				04EA96FE2A68039400FBA0E0 /* BasketUserDefaults.swift */,
 				048694092A0678EC005169EF /* GrindModel.swift */,
+				04E8B7D92B5AD0DC00E631A1 /* HomeViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -183,7 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				04ADD73429F28AED00C68331 /* MainTabBarViewController.swift */,
-				04ADD71D29F1A01600C68331 /* ViewController.swift */,
+				04ADD71D29F1A01600C68331 /* FirstScreenViewController.swift */,
 				04ADD72E29F1A0ED00C68331 /* CatalogViewController.swift */,
 				04ADD73029F1A15300C68331 /* BasketViewController.swift */,
 				04ADD73229F1A18600C68331 /* ProfileViewController.swift */,
@@ -310,11 +316,12 @@
 				0486940C2A08F4C2005169EF /* HomeImageCell.swift in Sources */,
 				04A4876C29F5B7A6006D36CC /* DrippViewController.swift in Sources */,
 				04A4876629F5B73D006D36CC /* CoffeeViewController.swift in Sources */,
+				04E8B7DE2B5AD43900E631A1 /* CatalogViewControllerFactory.swift in Sources */,
 				0486940E2A08F50D005169EF /* PopularProductsCell.swift in Sources */,
 				04A4876229F53F16006D36CC /* CatalogCollectionViewCell.swift in Sources */,
 				04EA96FF2A68039400FBA0E0 /* BasketUserDefaults.swift in Sources */,
 				04ADD73729F2A4E300C68331 /* UIColorExtention.swift in Sources */,
-				04ADD71E29F1A01600C68331 /* ViewController.swift in Sources */,
+				04ADD71E29F1A01600C68331 /* FirstScreenViewController.swift in Sources */,
 				0476E9BF2AA0A21B0077EDA2 /* CatalogModel.swift in Sources */,
 				0429D26229F539890015EE90 /* ShopModel.swift in Sources */,
 				04EC590E2A2A4BAD00F40105 /* BasketTableViewCell.swift in Sources */,
@@ -328,6 +335,7 @@
 				04A4876429F53F23006D36CC /* ShopCollectionViewCell.swift in Sources */,
 				04EC59102A2A581200F40105 /* BasketModel.swift in Sources */,
 				04ADD71C29F1A01600C68331 /* SceneDelegate.swift in Sources */,
+				04E8B7DA2B5AD0DC00E631A1 /* HomeViewModel.swift in Sources */,
 				0486941C2A124288005169EF /* HeaderHomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

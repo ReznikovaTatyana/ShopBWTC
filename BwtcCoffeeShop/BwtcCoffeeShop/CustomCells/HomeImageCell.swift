@@ -7,13 +7,16 @@
 
 import UIKit
 
-class HomeImage: UICollectionViewCell {
+class HomeImage: UICollectionViewCell, HomeImageProtocol {
     let homeImage = UIImageView()
     let identifaer = "ImageCell"
     var seriesImages:[String] = ["IMG_8454", "IMG_8462"]
     let imagePageControl = UIPageControl()
     
+    let verticalSpacing: CGFloat = 5
     
+    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
        createImage()
@@ -70,7 +73,7 @@ class HomeImage: UICollectionViewCell {
     
     
     @objc func pageDidChange(_sende: UIPageControl) {
-    
+        let ofsetX = UIScreen.main.bounds.width * CGFloat(imagePageControl.currentPage)
     }
     
 }

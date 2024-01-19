@@ -25,7 +25,6 @@ class AccessoriesViewController: UIViewController {
     
     var drippCell: DrippCell = DrippCell()
     let detailViewController = AllDetailViewController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

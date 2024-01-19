@@ -8,7 +8,9 @@
 import UIKit
 import Foundation
 
-
+protocol CategoryCellConfigurable {
+    func configure(with category: Category)
+}
 
 class CatalogCollectionViewCell: UICollectionViewCell {
     var categoryImage = UIImageView()
@@ -24,6 +26,7 @@ class CatalogCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         createcategoryImage()
@@ -38,14 +41,14 @@ class CatalogCollectionViewCell: UICollectionViewCell {
     }
     
     func setupUI() {
-          contentView.layer.cornerRadius = 12.0
+          contentView.layer.cornerRadius = 15.0
           contentView.layer.borderWidth = 0.0
           contentView.clipsToBounds = true
           contentView.layer.shadowColor = UIColor.tabBarItemAccent.cgColor
           contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
           contentView.layer.shadowRadius = 4.0
           contentView.layer.shadowOpacity = 1
-          contentView.layer.masksToBounds = false
+          contentView.layer.masksToBounds = true
       }
     
     func createcategoryImage() {
@@ -53,6 +56,7 @@ class CatalogCollectionViewCell: UICollectionViewCell {
         categoryImage.translatesAutoresizingMaskIntoConstraints = false
         categoryImage.contentMode = .scaleToFill
         categoryImage.clipsToBounds = true
+        categoryImage.layer.cornerRadius = 12
         NSLayoutConstraint.activate([
             categoryImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             categoryImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -81,6 +85,13 @@ class CatalogCollectionViewCell: UICollectionViewCell {
         categoryName.font = UIFont.systemFont(ofSize: 25)
     }
     
+}
+
+extension CatalogCollectionViewCell: CategoryCellConfigurable {
+    func configure(with category: Category) {
+        categoryName.text = category.name
+        categoryImage.image = UIImage(named: category.imageName)
+    }
 }
 
 

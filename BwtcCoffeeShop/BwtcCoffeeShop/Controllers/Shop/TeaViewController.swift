@@ -33,7 +33,7 @@ class TeaViewController: UIViewController {
         navigationItem.titleView = logoImageItem
         createSearch()
         createCollectionView()
-    }
+        }
         
         func createCollectionView() {
             view.addSubview(teaCollectionView)

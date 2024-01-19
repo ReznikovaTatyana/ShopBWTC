@@ -46,18 +46,18 @@ class AllDetailViewController: UIViewController {
         button.setTitleColor(UIColor.tabBarItemLight, for: .normal)
         button.backgroundColor = .mainOragge
         button.layer.cornerRadius = 12
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.addTarget(AllDetailViewController.self, action: #selector(buttonAction), for: .touchUpInside)
         return button
     }()
     
     let customStepper: CustomStepper = {
         let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+        stepper.addTarget(AllDetailViewController.self, action: #selector(didStepperValueChanged), for: .valueChanged)
         return stepper
     }()
     
     let grindModel = ModelGrind()
-    var shop: Shop?
+    var shop: Goods?
     
 
    
@@ -102,6 +102,7 @@ class AllDetailViewController: UIViewController {
             labelPrice.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
+            
         buyButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             buyButton.topAnchor.constraint(equalTo: labelPrice.bottomAnchor, constant: 10),
@@ -126,22 +127,32 @@ class AllDetailViewController: UIViewController {
     }
     
     @objc private func  buttonAction() {
-            guard let image = shop?.imageName else {return}
-            guard let name = shop?.name  else {return}
-            guard let price = shop?.price else {return}
+            guard let image = shop?.imageName,
+                  let name = shop?.name,
+                  let salePrice = shop?.optPrice,
+                  let identifaer = shop?.identifaer,
+                  let countDrip = shop?.countDrip,
+                  let mass = shop?.mass,
+                  let price = shop?.price else {return}
             let position = BasketModel( basketImageName: image,
-                                    basketName: name,
-                                    basketGrind: "" ,
-                                    basketPrice: price,
-                                    stepper: customStepper.firstValue,
-                                    basketCoast: customStepper.firstValue * price)
+                                        basketName: name,
+                                        basketGrind: "" ,
+                                        basketPrice: price,
+                                        stepper: customStepper.firstValue,
+                                        basketCoast: price * customStepper.firstValue,
+                                        basketSalePrice: salePrice,
+                                        identifaer: identifaer,
+                                        countDrip: countDrip,
+                                        mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)
         
     }
     
+    
+    
     @objc private func didStepperValueChanged() {
-      
+      // print("latest value: \(customStepper.firstValue)")
      }
 }
 

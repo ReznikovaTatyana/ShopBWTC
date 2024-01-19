@@ -42,19 +42,19 @@ class DrippCollectionViewCell: UICollectionViewCell {
         button.setTitleColor(.tabBarItemLight, for: .normal)
         button.backgroundColor = .mainOragge
         button.tintColor = .mainOragge
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.addTarget(DrippCollectionViewCell.self, action: #selector(buttonAction), for: .touchUpInside)
         button.layer.cornerRadius = 12
         return button
     }()
     
     let customStepper: CustomStepper = {
         let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+        stepper.addTarget(DrippCollectionViewCell.self, action: #selector(didStepperValueChanged), for: .valueChanged)
         return stepper
     }()
     
     var textLabel = UILabel()
-    var shop: Shop? {
+    var shop: Goods? {
         didSet {
             drippName.text = shop?.name
             if let text = shop?.price {
@@ -139,15 +139,23 @@ class DrippCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func buttonAction() {
-        guard let image = shop?.imageName else {return}
-        guard let nameText = drippName.text  else {return}
-        guard let price = shop?.price else {return}
+        guard let image = shop?.imageName,
+              let nameText = drippName.text,
+              let salePrice = shop?.optPrice,
+              let identifaer = shop?.identifaer,
+              let countDrip = shop?.countDrip,
+              let mass = shop?.mass,
+              let price = shop?.price else {return}
         let position = BasketModel( basketImageName: image,
                                 basketName: nameText,
-                                basketGrind: "",
-                                basketPrice: price,
+                                    basketGrind: "",
+                                    basketPrice: price,
                                     stepper: customStepper.firstValue,
-                                    basketCoast: customStepper.firstValue * price)
+                                    basketCoast: price * customStepper.firstValue,
+                                    basketSalePrice: salePrice,
+                                    identifaer: identifaer,
+                                    countDrip: countDrip,
+                                    mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)
         print(position.basketName)

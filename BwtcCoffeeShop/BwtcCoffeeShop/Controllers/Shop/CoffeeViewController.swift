@@ -23,11 +23,10 @@ class CoffeeViewController: UIViewController {
         return cv
         }()
     
-    var contentCoffeeShopCell: ContentCoffeeShopCell = ContentCoffeeShopCell()
+    var contentCoffeeShopCell: CoffeeSmallPacks = CoffeeSmallPacks()
     let detailViewController = CoffeeDetailViewController()
-    
     lazy var sourse: [SectionCoffee] = [
-     SectionCoffee(sectionName: "Pack 250gr", coffee: contentCoffeeShopCell.itemShopArray),
+        SectionCoffee(sectionName: "Pack 250gr", coffee: contentCoffeeShopCell.goods),
      SectionCoffee(sectionName: "Pack 1gr", coffee: contentCoffeeShopCell.bigPackArray) ]
 
     override func viewDidLoad() {
@@ -72,7 +71,7 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return contentCoffeeShopCell.itemShopArray.count
+        case 0: return contentCoffeeShopCell.goods.count
         case 1: return contentCoffeeShopCell.bigPackArray.count
         default: break
         }
@@ -83,7 +82,7 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
         if let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
             switch indexPath.section {
             case 0:
-                itemCell.shop = contentCoffeeShopCell.itemShopArray[indexPath.item]
+                itemCell.shop = contentCoffeeShopCell.goods[indexPath.item]
             case 1:
                 itemCell.shop = contentCoffeeShopCell.bigPackArray[indexPath.item]
             default: break
@@ -113,8 +112,8 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
         if let menu = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
             switch indexPath.section {
             case 0:
-                menu.shop = contentCoffeeShopCell.itemShopArray[indexPath.row]
-                detailViewController.shop = menu.shop
+                menu.shop = contentCoffeeShopCell.goods[indexPath.row]
+                detailViewController.coffeeGoods = menu.shop
                 detailViewController.labelName.text = menu.shopName.text
                 detailViewController.imageView.image = menu.shopImageView.image
                 detailViewController.labelPrice.text = menu.shopPrice.text
@@ -122,7 +121,7 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
                      navigationController?.pushViewController(detailViewController, animated: true)
             case 1:
                 menu.shop = contentCoffeeShopCell.bigPackArray[indexPath.row]
-                detailViewController.shop = menu.shop
+                detailViewController.coffeeGoods = menu.shop
                 detailViewController.labelName.text = menu.shopName.text
                 detailViewController.imageView.image = menu.shopImageView.image
                 detailViewController.labelPrice.text = menu.shopPrice.text
@@ -131,9 +130,11 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
             default:
                 break
             }
+            
+        }
+        
         }
     }
-}
             
             
 extension CoffeeViewController:  UICollectionViewDelegateFlowLayout {
