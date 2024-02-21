@@ -30,30 +30,33 @@ class CatalogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
-        createCollectionView()
         setupViews()
     }
     
     private func setupViews() {
         createSearch()
-        let segmentLanguageItem = customSegment()
+        createCollectionView()
+        makeConstraints()
         let logoImageItem = createCustomTitleView()
-        navigationItem.rightBarButtonItem = segmentLanguageItem
+
         navigationItem.titleView = logoImageItem
     }
     
     
-    func createCollectionView() {
+   private func createCollectionView() {
         view.addSubview(collectionViewCatalog)
         collectionViewCatalog.frame = view.bounds
         collectionViewCatalog.layer.shadowRadius = 10
         collectionViewCatalog.backgroundColor = .white
-        collectionViewCatalog.clipsToBounds = true
+        //collectionViewCatalog.clipsToBounds = true
         collectionViewCatalog.dataSource = self
         collectionViewCatalog.delegate = self
         collectionViewCatalog.reloadData()
         collectionViewCatalog.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: "\(CatalogCollectionViewCell.self)")
+        
+    }
+    
+    func makeConstraints() {
         collectionViewCatalog.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionViewCatalog.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),

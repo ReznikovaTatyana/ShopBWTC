@@ -23,7 +23,7 @@ class AccessoriesViewController: UIViewController {
             return cv
         }()
     
-    var drippCell: DrippCell = DrippCell()
+    var drippCell: ShopViewModel = ShopViewModel()
     let detailViewController = AllDetailViewController()
     override func viewDidLoad() {
         super.viewDidLoad()

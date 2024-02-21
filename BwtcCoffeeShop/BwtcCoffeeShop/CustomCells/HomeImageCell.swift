@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 class HomeImage: UICollectionViewCell, HomeImageProtocol {
     let homeImage = UIImageView()
@@ -67,13 +68,13 @@ class HomeImage: UICollectionViewCell, HomeImageProtocol {
         imagePageControl.pageIndicatorTintColor = .tabBarItemAccent
         imagePageControl.currentPage = seriesImages.count
         imagePageControl.currentPageIndicatorTintColor = .mainOragge
-        imagePageControl.backgroundStyle = .automatic
+        //imagePageControl.backgroundStyle = .automatic
         imagePageControl.addTarget(self, action: #selector(pageDidChange(_sende: )), for: .valueChanged)
     }
     
     
     @objc func pageDidChange(_sende: UIPageControl) {
-        let ofsetX = UIScreen.main.bounds.width * CGFloat(imagePageControl.currentPage)
+        _ = UIScreen.main.bounds.width * CGFloat(imagePageControl.currentPage)
     }
     
 }

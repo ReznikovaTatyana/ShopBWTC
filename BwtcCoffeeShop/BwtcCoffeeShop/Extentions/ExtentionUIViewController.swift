@@ -11,22 +11,21 @@ extension UIViewController {
     
     func createCustomNavigationBar() {
         navigationController?.navigationBar.barTintColor = .mainOragge
+        
     }
     
     func createCustomTitleView() -> UIView {
         
         let view = UIView()
         view.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
-        let imageLogo = UIImageView()
-        let image = UIImage(named: "2023-04-23 11.19.26")
-        imageLogo.image = image
-        imageLogo.frame = CGRect(x: -70, y: 0, width: 100, height: 40)
-        imageLogo.layer.cornerRadius = 21
-        imageLogo.clipsToBounds = true
-        view.addSubview(imageLogo)
+        let titlelabel = UILabel()
+        titlelabel.text = "b  w  t  c"
+        titlelabel.textAlignment = .center
+        titlelabel.textColor = .mainOragge
+        titlelabel.font = UIFont.systemFont(ofSize: 44)
+        titlelabel.frame = CGRect(x: 14, y: -7, width: 170, height: 50)
+        view.addSubview(titlelabel)
         return view
-        
-        
     }
     
     func customSegment() -> UIBarButtonItem {
@@ -56,4 +55,16 @@ extension UIViewController: UISearchBarDelegate {
        //var text = searchText.lowercased()
        
    }
+}
+
+extension UILabel {
+    
+  public func addUnderline() {
+        attributedText = NSAttributedString(string: text ?? "" , attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.red])
+    }
+    
+    public  func removeUnderline() {
+        attributedText = NSAttributedString(string: text ?? "" , attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.clear])
+    }
+    
 }

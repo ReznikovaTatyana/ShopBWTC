@@ -4,8 +4,9 @@
 //
 //  Created by mac on 18.05.2023.
 //
-import SnapKit
+
 import UIKit
+
 
 protocol CoffeeDetailViewControllerProtocol {
     var coffeeGoods: Goods? { get set }
@@ -45,27 +46,20 @@ final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewContro
         return label
     }()
     
-    var buyButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Kупити", for: .normal)
-        button.setTitleColor(UIColor.tabBarItemLight, for: .normal)
-        button.backgroundColor = .mainOragge
-        button.layer.cornerRadius = 12
-        button.addTarget(CoffeeDetailViewController.self, action: #selector(buttonAction), for: .touchUpInside)
-        return button
-    }()
-    
+    var buyButton = UIButton()
+      
     var grindPicker: UIPickerView = {
         let picker = UIPickerView()
         picker.frame = CGRect(x: 0, y: 240, width: 185, height: 55)
         return picker
     }()
 
-    let customStepper: CustomStepper = {
-        let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(CoffeeDetailViewController.self, action: #selector(didStepperValueChanged), for: .valueChanged)
-        return stepper
-    }()
+    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+     
+    
+    var infoText = UILabel()
+    let scrollView = UIScrollView()
+    //let contentView = UIView()
     
     var pickerText = UILabel()
     let grindModel = ModelGrind()
@@ -77,75 +71,154 @@ final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewContro
         view.backgroundColor = .white
         grindPicker.delegate = self
         grindPicker.dataSource = self
+        view.addSubview(scrollView)
+        createView()
         setupView()
+        setupText()
+        addToScrollView()
         makeConstraints()
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupText()
     }
     
     func setupView() {
-        view.addSubview(imageView)
-        view.addSubview(labelName)
-        view.addSubview(labelPrice)
-        view.addSubview(textLabel)
-        view.addSubview(buyButton)
-        view.addSubview(customStepper)
-        view.addSubview(grindPicker)
+        createBuyButton()
+        createCustomStepper()
+        
     }
+    
+    private func createBuyButton() {
+        buyButton.setTitle("Kупити", for: .normal)
+        buyButton.setTitleColor(UIColor.tabBarItemLight, for: .normal)
+        buyButton.backgroundColor = .mainOragge
+        buyButton.layer.cornerRadius = 12
+        buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    }
+    
+    private func createCustomStepper() {
+        customStepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+    }
+    
+   func createView() {
+     //  contentView.translatesAutoresizingMaskIntoConstraints = false
+         // scrollView.addSubview(contentView)
+       scrollView.addSubview(imageView)
+       scrollView.addSubview(labelName)
+       scrollView.addSubview(labelPrice)
+       scrollView.addSubview(buyButton)
+       scrollView.addSubview(customStepper)
+       scrollView.addSubview(grindPicker)
+       scrollView.addSubview(infoText)
+        
+    }
+    func setupText() {
+        
+        infoText.text = coffeeGoods?.text
+        infoText.textAlignment = .left
+        infoText.font = .systemFont(ofSize: 18)
+        infoText.numberOfLines = 0
+        guard let coffeeText = coffeeGoods?.text else {return}
+        rangesTextToChangeColor(textToRanges: coffeeText)
+    }
+    
+   
+        func  attributedText(text: String, ranges: [String]) {
+                let attributed = NSMutableAttributedString(string: text)
+                for  rangeString in ranges {
+                    let range = (text as NSString).range(of: rangeString)
+                    attributed.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 19), range: range)
+                }
+               infoText.attributedText = attributed
+    }
+    
+    func rangesTextToChangeColor(textToRanges: String) {
+            let ranges = ["Регіон:", "Вид:", "Обробка:", "Смаковий профіль:", "Kраїна:"]
+        attributedText(text: textToRanges, ranges: ranges)
+        }
 
+    
+    func addToScrollView() {
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.alwaysBounceVertical = true
+  }
 
     func makeConstraints() {
         
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-            imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.33),
-            imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        labelName.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            labelName.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 0),
-            labelName.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            labelName.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        labelPrice.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            labelPrice.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: 15),
-            labelPrice.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-            labelPrice.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        grindPicker.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            grindPicker.topAnchor.constraint(equalTo: labelPrice.bottomAnchor, constant: 5),
-            grindPicker.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            grindPicker.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.08),
-            grindPicker.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-            
-        buyButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            buyButton.topAnchor.constraint(equalTo: grindPicker.bottomAnchor, constant: 10),
-            buyButton.widthAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 0.4),
-            buyButton.trailingAnchor.constraint(equalTo: grindPicker.trailingAnchor, constant: -10)
-        ])
-        
-        customStepper.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            customStepper.topAnchor.constraint(equalTo: grindPicker.bottomAnchor, constant: 10),
-            customStepper.leadingAnchor.constraint(equalTo: grindPicker.leadingAnchor, constant: 20),
-            customStepper.widthAnchor.constraint(equalTo: buyButton.widthAnchor, multiplier: 0.5),
-            customStepper.heightAnchor.constraint(equalTo: buyButton.heightAnchor)
-        ])
-        
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textLabel.topAnchor.constraint(equalTo: customStepper.bottomAnchor, constant: 15),
-            textLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-        ])
+                NSLayoutConstraint.activate([
+                    imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
+                    imageView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.33),
+                    imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1),
+                    imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+                ])
+                
+                labelName.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    labelName.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 0),
+                    labelName.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1),
+                    labelName.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+                ])
+                
+                labelPrice.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    labelPrice.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: 15),
+                    labelPrice.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1),
+                    labelPrice.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+                ])
+                
+                grindPicker.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    grindPicker.topAnchor.constraint(equalTo: labelPrice.bottomAnchor, constant: 5),
+                    grindPicker.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
+                    grindPicker.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.08),
+                    grindPicker.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+                ])
+                    
+                buyButton.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    buyButton.topAnchor.constraint(equalTo: grindPicker.bottomAnchor, constant: 10),
+                    buyButton.widthAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 0.4),
+                    buyButton.trailingAnchor.constraint(equalTo: grindPicker.trailingAnchor, constant: -10)
+                ])
+                
+                customStepper.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    customStepper.topAnchor.constraint(equalTo: grindPicker.bottomAnchor, constant: 10),
+                    customStepper.leadingAnchor.constraint(equalTo: grindPicker.leadingAnchor, constant: 20),
+                    customStepper.widthAnchor.constraint(equalTo: buyButton.widthAnchor, multiplier: 0.5),
+                    customStepper.heightAnchor.constraint(equalTo: buyButton.heightAnchor)
+                ])
+                
+//                textLabel.translatesAutoresizingMaskIntoConstraints = false
+//                NSLayoutConstraint.activate([
+//                    textLabel.topAnchor.constraint(equalTo: customStepper.bottomAnchor, constant: 15),
+//                    textLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+//                    textLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+//                ])
+        infoText.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([
+                            infoText.topAnchor.constraint(equalTo: customStepper.bottomAnchor, constant: 15),
+                            infoText.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20),
+                            infoText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+                            infoText.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+                        ])
+//
     }
+    
+    
+    
     
     func resetPicker() {
         grindPicker.selectRow(0, inComponent: 0, animated: true)
@@ -161,6 +234,7 @@ final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewContro
                   let identifaer = coffeeGoods?.identifaer,
                   let countDrip = coffeeGoods?.countDrip,
                   let mass = coffeeGoods?.mass,
+                  let countPackDrip = coffeeGoods?.countPackDrip,
                   let price = coffeeGoods?.price else {return}
             let position = BasketModel( basketImageName: image,
                                         basketName: name,
@@ -170,19 +244,19 @@ final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewContro
                                         basketCoast: price * customStepper.firstValue,
                                         basketSalePrice: salePrice,
                                         identifaer: identifaer,
-                                        countDrip: countDrip,
+                                        countDrip: countDrip, 
+                                        countPackDrip: countPackDrip,
                                         mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)
         grindPicker.reloadAllComponents()
         resetPicker()
-        
     }
     
     
     
     @objc private func didStepperValueChanged() {
-      // print("latest value: \(customStepper.firstValue)")
+      
      }
 }
 

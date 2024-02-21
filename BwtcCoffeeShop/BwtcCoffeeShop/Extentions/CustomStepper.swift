@@ -6,31 +6,12 @@
 //
 
 import UIKit
-import SnapKit
+
 
 class CustomStepper: UIControl {
    
-    var plusButton: UIButton = {
-        let button = UIButton()
-        button.addTarget(CustomStepper.self, action: #selector(buttonTappedPlus(_:)), for: .touchUpInside)
-        button.setTitle("+", for: .normal)
-        button.layer.cornerRadius = 12
-        button.setTitleColor(.tabBarItemLight, for: .normal)
-        button.backgroundColor = .mainOragge
-        button.tintColor = .mainOragge
-        return button
-    }()
-    
-    var minusButton: UIButton = {
-        let button = UIButton()
-        button.addTarget(CustomStepper.self, action: #selector(buttonTappedMinus(_:)), for: .touchUpInside)
-        button.setTitle("-", for: .normal)
-        button.layer.cornerRadius = 12
-        button.setTitleColor(.tabBarItemLight, for: .normal)
-        button.backgroundColor = .mainOragge
-        button.tintColor = .mainOragge
-        return button
-    }()
+    var plusButton = UIButton()
+    var minusButton = UIButton()
    
     lazy var counterLabel: UILabel = {
         let label = UILabel()
@@ -71,17 +52,40 @@ class CustomStepper: UIControl {
     }
     
     
+    
+    
     private func setup() {
         backgroundColor = .white
         addSubview(container)
-        container.snp.makeConstraints { make in
-            make.width.equalTo(80)
-            make.height.equalTo(30)
-        }
+        container.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(equalToConstant: 80),
+            container.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        createPlusButton()
+        createMinusButton()
         [minusButton, counterLabel, plusButton].forEach(container.addArrangedSubview)
     }
     
-
+    private func createPlusButton() {
+        plusButton.addTarget(self, action: #selector(buttonTappedPlus(_:)), for: .touchUpInside)
+        plusButton.setTitle("+", for: .normal)
+        plusButton.layer.cornerRadius = 12
+        plusButton.setTitleColor(.tabBarItemLight, for: .normal)
+        plusButton.backgroundColor = .mainOragge
+        plusButton.tintColor = .mainOragge
+        
+    }
+    
+    private func createMinusButton() {
+        minusButton.addTarget(self, action: #selector(buttonTappedMinus(_:)), for: .touchUpInside)
+        minusButton.setTitle("-", for: .normal)
+        minusButton.layer.cornerRadius = 12
+        minusButton.setTitleColor(.tabBarItemLight, for: .normal)
+        minusButton.backgroundColor = .mainOragge
+    }
+    
     func updateValuePlus(_ value: Int) {
         firstValue = value
         if  firstValue < viewData.maximum {
@@ -121,4 +125,6 @@ class CustomStepper: UIControl {
     
 }
 
- 
+
+
+

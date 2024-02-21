@@ -8,44 +8,80 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+
     
-    let imageView = UIImageView()
-    let image = UIImage(named: "Ethiopia Guji")
-    let imageUrl: String = "https://static.wixstatic.com/media/6159d6_7a97d8f91e20495bbd44d528b9671542~mv2.png/v1/fill/w_964,h_964,al_c,usm_0.66_1.00_0.01/6159d6_7a97d8f91e20495bbd44d528b9671542~mv2.png"
+    var profileTableView: UITableView = {
+        let table = UITableView()
+       table.rowHeight = 110
+        table.register(ProfileTableViewCell.self, forCellReuseIdentifier: "ProfileTableViewCell")
+        return table
+    }()
+    
+    var profileArray: ProfileModelProtocol = ProfileViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Profile"
+        view.addSubview(profileTableView)
         view.backgroundColor = .white
+        profileTableView.delegate = self
+        profileTableView.dataSource = self
         setupViews()
-        createConstr()
-        config(path: imageUrl)
+       
  }
-    
-    func config(path: String) {
-        if let url = URL(string: path),
-           let data = try? Data(contentsOf: url),
-           let image = UIImage(data: data) {
-            imageView.image = image
-        }
-    }
 
     private func setupViews() {
         let segmentLanguageItem = customSegment()
         let logoImageItem = createCustomTitleView()
         navigationItem.rightBarButtonItem = segmentLanguageItem
         navigationItem.titleView = logoImageItem
-        view.addSubview(imageView)
+        makeConstraints()
+        
     }
     
-    func createConstr() {
-        imageView.snp.makeConstraints { make in
-            make.height.equalTo(200)
-            make.width.equalTo(200)
-            make.left.equalTo(30)
-            make.top.equalTo(30)
+    func makeConstraints() {
+        profileTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            profileTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            profileTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            profileTableView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            profileTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
         }
-    }
+
     
 }
+
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return profileArray.info.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileTableViewCell", for: indexPath) as? ProfileTableViewCell {
+           
+            let info = profileArray.info[indexPath.item]
+            cell.configure(with: info)
+            return cell
+        }
+            return UITableViewCell()
+            
+        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedProfile = profileArray.info[indexPath.item]
+        navigateToProfile(selectedProfile)
+    }
+    
+    
+    private func navigateToProfile(_ profile: ProfileModel) {
+        let viewController = ProfileViewControllerFactory.createViewController(for: profile)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+   
+    
+    
+}
+
+
 
