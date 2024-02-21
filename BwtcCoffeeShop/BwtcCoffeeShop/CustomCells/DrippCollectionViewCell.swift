@@ -38,20 +38,13 @@ class DrippCollectionViewCell: UICollectionViewCell {
     
     var buyButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Купити", for: .normal)
-        button.setTitleColor(.tabBarItemLight, for: .normal)
-        button.backgroundColor = .mainOragge
-        button.tintColor = .mainOragge
-        button.addTarget(DrippCollectionViewCell.self, action: #selector(buttonAction), for: .touchUpInside)
-        button.layer.cornerRadius = 12
+       
         return button
     }()
     
-    let customStepper: CustomStepper = {
-        let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(DrippCollectionViewCell.self, action: #selector(didStepperValueChanged), for: .valueChanged)
-        return stepper
-    }()
+    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+        
+    
     
     var textLabel = UILabel()
     var shop: Goods? {
@@ -60,9 +53,9 @@ class DrippCollectionViewCell: UICollectionViewCell {
             if let text = shop?.price {
                 drippPrice.text = "\(text) грн"
             }
-            if let image = shop?.imageName {
-                drippImageView.image = UIImage(named: image)
-                }
+            if let imageUrl = URL(string: shop?.imageName ?? "") {
+                drippImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+                        }
             }
         }
     
@@ -97,8 +90,23 @@ class DrippCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(drippPrice)
         self.contentView.addSubview(buyButton)
         self.contentView.addSubview(customStepper)
+        createBuyButton()
+        createCustomStepper()
     }
     
+   private func createBuyButton() {
+        buyButton.setTitle("Купити", for: .normal)
+        buyButton.setTitleColor(.tabBarItemLight, for: .normal)
+        buyButton.backgroundColor = .mainOragge
+        buyButton.tintColor = .mainOragge
+        buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        buyButton.layer.cornerRadius = 12
+    }
+    
+    private func createCustomStepper() {
+        customStepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+        
+    }
     func makeConstraints() {
         
         drippImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -145,6 +153,7 @@ class DrippCollectionViewCell: UICollectionViewCell {
               let identifaer = shop?.identifaer,
               let countDrip = shop?.countDrip,
               let mass = shop?.mass,
+              let countPackDrip = shop?.countPackDrip,
               let price = shop?.price else {return}
         let position = BasketModel( basketImageName: image,
                                 basketName: nameText,
@@ -155,6 +164,7 @@ class DrippCollectionViewCell: UICollectionViewCell {
                                     basketSalePrice: salePrice,
                                     identifaer: identifaer,
                                     countDrip: countDrip,
+                                    countPackDrip: countPackDrip,
                                     mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)

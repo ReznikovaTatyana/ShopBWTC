@@ -40,21 +40,9 @@ class AllDetailViewController: UIViewController {
         return label
     }()
     
-    var buyButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Kупити", for: .normal)
-        button.setTitleColor(UIColor.tabBarItemLight, for: .normal)
-        button.backgroundColor = .mainOragge
-        button.layer.cornerRadius = 12
-        button.addTarget(AllDetailViewController.self, action: #selector(buttonAction), for: .touchUpInside)
-        return button
-    }()
-    
-    let customStepper: CustomStepper = {
-        let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(AllDetailViewController.self, action: #selector(didStepperValueChanged), for: .valueChanged)
-        return stepper
-    }()
+    var buyButton = UIButton()
+      
+    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
     
     let grindModel = ModelGrind()
     var shop: Goods?
@@ -65,19 +53,32 @@ class AllDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupView()
-        makeConstraints()
     }
     
-    func setupView() {
+   private func setupView() {
         view.addSubview(imageView)
         view.addSubview(labelName)
         view.addSubview(labelPrice)
         view.addSubview(textLabel)
         view.addSubview(buyButton)
         view.addSubview(customStepper)
+        createBuyButton()
+        createCustomStepper()
+        makeConstraints()
     }
 
+    private func createBuyButton() {
+        buyButton.setTitle("Kупити", for: .normal)
+        buyButton.setTitleColor(UIColor.tabBarItemLight, for: .normal)
+        buyButton.backgroundColor = .mainOragge
+        buyButton.layer.cornerRadius = 12
+        buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    }
 
+    private  func createCustomStepper() {
+        customStepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+    }
+    
     func makeConstraints() {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -133,6 +134,7 @@ class AllDetailViewController: UIViewController {
                   let identifaer = shop?.identifaer,
                   let countDrip = shop?.countDrip,
                   let mass = shop?.mass,
+                  let countPackDrip = shop?.countPackDrip,
                   let price = shop?.price else {return}
             let position = BasketModel( basketImageName: image,
                                         basketName: name,
@@ -143,6 +145,7 @@ class AllDetailViewController: UIViewController {
                                         basketSalePrice: salePrice,
                                         identifaer: identifaer,
                                         countDrip: countDrip,
+                                        countPackDrip: countPackDrip,
                                         mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)

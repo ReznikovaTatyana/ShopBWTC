@@ -22,12 +22,15 @@ class DrippViewController: UIViewController {
         return cv
         }()
     
-    var drippCell: DrippCell = DrippCell()
+    var drippCell: ShopViewModel = ShopViewModel()
     let detailViewController = AllDetailViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        drippCell.updateGoodsFromFirebaseDrip { [weak self] in
+            self?.drippCollectionView.reloadData()
+        }
     }
     
     func setupViews() {

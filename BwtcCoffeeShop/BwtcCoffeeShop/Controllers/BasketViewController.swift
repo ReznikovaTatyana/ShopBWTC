@@ -21,51 +21,12 @@ class BasketViewController: UIViewController {
         return table
     }()
     
-    var orderView: UIView = {
-        let view = UIView()
-        view.layer.borderColor = UIColor.tabBarItemLight.cgColor
-        view.layer.borderWidth = 2.0
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 20
-        return view
-    }()
-    
-    var summLabelText: UILabel =  {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 18)
-        label.text = "Сума:"
-        return label
-    }()
-    
-   lazy var summLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 18)
-        label.textColor = .mainOragge
-        label.text = "\(totalCoast) грн"
-        return label
-    }()
-    
-    lazy var saleSummLabel: UILabel = {
-         let label = UILabel()
-         label.textAlignment = .center
-         label.font = .systemFont(ofSize: 18)
-         label.textColor = .mainOragge
-         label.text = "\(saleTotalCoast) грн"
-         return label
-     }()
-    
-    var orderButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Замовити", for: .normal)
-        button.setTitleColor(.tabBarItemLight, for: .normal)
-        button.backgroundColor = .mainOragge
-        button.tintColor = .mainOragge
-        button.layer.cornerRadius = 12
-        button.addTarget(BasketViewController.self, action: #selector(orderButtonAction), for: .touchUpInside)
-       return button
-    }()
+    var orderView = UIView()
+    var summLabelText = UILabel()
+    var summCoastLabel = UILabel()
+    var saleSummCoastLabel = UILabel()
+    var orderButton = UIButton()
+      
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,62 +43,92 @@ class BasketViewController: UIViewController {
     
     
      func setupViews() {
-        let segmentLanguageItem = customSegment()
         let logoImageItem = createCustomTitleView()
-        navigationItem.rightBarButtonItem = segmentLanguageItem
         navigationItem.titleView = logoImageItem
          view.addSubview(myTableView)
          view.addSubview(orderView)
-         orderView.addSubview(summLabel)
+         orderView.addSubview(summCoastLabel)
          orderView.addSubview(summLabelText)
-         orderView.addSubview(saleSummLabel)
+         orderView.addSubview(saleSummCoastLabel)
          orderView.addSubview(orderButton)
-         constraints()
+         makeConstraints()
+         createOrderView()
+         createSaleSummLabel()
+         createSummLabel()
+         createSummLabelText()
+         createOrderButton()
     }
     
-    func constraints() {
+    private func createOrderView() {
+        orderView.layer.borderColor = UIColor.tabBarItemLight.cgColor
+        orderView.layer.borderWidth = 2.0
+        orderView.clipsToBounds = true
+        orderView.layer.cornerRadius = 20
+        orderView.translatesAutoresizingMaskIntoConstraints = false
+        
+    }
+    
+    private func createSummLabel() {
+        summCoastLabel.textAlignment = .center
+        summCoastLabel.font = .systemFont(ofSize: 18)
+        summCoastLabel.textColor = .black
+        summCoastLabel.text = "\(totalCoast) грн"
+        summCoastLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func createSaleSummLabel() {
+        saleSummCoastLabel.textAlignment = .center
+        saleSummCoastLabel.font = .systemFont(ofSize: 18)
+        saleSummCoastLabel.textColor = .mainOragge
+        saleSummCoastLabel.text = "\(saleTotalCoast) грн"
+        saleSummCoastLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func createOrderButton() {
+        orderButton.setTitle("Замовити", for: .normal)
+        orderButton.setTitleColor(.tabBarItemLight, for: .normal)
+        orderButton.backgroundColor = .mainOragge
+        orderButton.tintColor = .mainOragge
+        orderButton.layer.cornerRadius = 12
+        orderButton.addTarget(self, action: #selector(orderButtonAction), for: .touchUpInside)
+        orderButton.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func createSummLabelText() {
+        summLabelText.textAlignment = .center
+        summLabelText.font = .systemFont(ofSize: 18)
+        summLabelText.text = "Сума:"
+        summLabelText.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func makeConstraints() {
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             myTableView.bottomAnchor.constraint(equalTo: orderView.topAnchor),
             myTableView.widthAnchor.constraint(equalTo: view.widthAnchor),
             myTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            myTableView.topAnchor.constraint(equalTo: view.topAnchor)
-        ])
-        
-        orderView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            myTableView.topAnchor.constraint(equalTo: view.topAnchor),
+       
             orderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: 0),
             orderView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier:  1),
             orderView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.12),
-            orderView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+            orderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         
-        summLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            summLabel.widthAnchor.constraint(equalTo: orderView.widthAnchor, multiplier:  0.25),
-            summLabel.heightAnchor.constraint(equalTo: orderView.heightAnchor, multiplier: 0.2),
-            summLabel.leadingAnchor.constraint(equalTo: orderView.leadingAnchor, constant: 20),
-            summLabel.topAnchor.constraint(equalTo: summLabelText.bottomAnchor, constant: 15)
-        ])
+            summCoastLabel.widthAnchor.constraint(equalTo: orderView.widthAnchor, multiplier:  0.25),
+            summCoastLabel.heightAnchor.constraint(equalTo: orderView.heightAnchor, multiplier: 0.2),
+            summCoastLabel.leadingAnchor.constraint(equalTo: orderView.leadingAnchor, constant: 20),
+            summCoastLabel.topAnchor.constraint(equalTo: summLabelText.bottomAnchor, constant: 15),
+      
+            saleSummCoastLabel.widthAnchor.constraint(equalTo: orderView.widthAnchor, multiplier:  0.25),
+            saleSummCoastLabel.heightAnchor.constraint(equalTo: orderView.heightAnchor, multiplier: 0.2),
+            saleSummCoastLabel.leadingAnchor.constraint(equalTo: summCoastLabel.trailingAnchor, constant: 5),
+            saleSummCoastLabel.topAnchor.constraint(equalTo: orderView.topAnchor, constant: 25),
         
-        saleSummLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            saleSummLabel.widthAnchor.constraint(equalTo: orderView.widthAnchor, multiplier:  0.25),
-            saleSummLabel.heightAnchor.constraint(equalTo: orderView.heightAnchor, multiplier: 0.2),
-            saleSummLabel.leadingAnchor.constraint(equalTo: summLabel.trailingAnchor, constant: 20),
-            saleSummLabel.topAnchor.constraint(equalTo: orderView.topAnchor, constant: 25)
-        ])
-        
-        summLabelText.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
             summLabelText.widthAnchor.constraint(equalTo: orderView.widthAnchor, multiplier:  0.25),
             summLabelText.heightAnchor.constraint(equalTo: orderView.heightAnchor, multiplier: 0.2),
             summLabelText.leadingAnchor.constraint(equalTo: orderView.leadingAnchor, constant: 15),
-            summLabelText.topAnchor.constraint(equalTo: orderView.topAnchor, constant: 15)
-        ])
-        
-        orderButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
+            summLabelText.topAnchor.constraint(equalTo: orderView.topAnchor, constant: 15),
+    
             orderButton.widthAnchor.constraint(equalTo: orderView.widthAnchor, multiplier:  0.4),
             orderButton.heightAnchor.constraint(equalTo: orderView.heightAnchor, multiplier: 0.5),
             orderButton.trailingAnchor.constraint(equalTo: orderView.trailingAnchor, constant: -10),
@@ -146,23 +137,27 @@ class BasketViewController: UIViewController {
     }
     
     @objc func orderButtonAction() {
-        
+        let viewController = RegistrationViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func updateTotalCost() {
         saleTotalCoast = basketViewModel.calculateSaleTotalCost()
             //summLabel.text = "\(totalCoast) грн"
-            saleSummLabel.text = "\(saleTotalCoast) грн"
+        saleSummCoastLabel.text = "\(saleTotalCoast) грн"
         
         }
     
     private func updateText() {
         if totalCoast == saleTotalCoast {
-            saleSummLabel.text = ""
+            saleSummCoastLabel.text = ""
+            summCoastLabel.removeUnderline()
+           
+        } else {
+            summCoastLabel.addUnderline()
+         
         }
     }
-    
-    
 }
 
 extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
@@ -174,7 +169,7 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "BasketTableViewCell", for: indexPath) as? BasketTableViewCell {
             cell.position = basketViewModel.positions[indexPath.item]
             totalCoast = basketViewModel.positions.reduce(0) { $0 + $1.basketPrice * $1.stepper }
-            summLabel.text = "\(totalCoast) грн"
+            summCoastLabel.text = "\(totalCoast) грн"
             updateTotalCost()
             updateText()
             cell.delegate = self
@@ -202,29 +197,12 @@ extension BasketViewController: BasketTableViewCellDelegate {
         guard let index = myTableView.indexPath(for: cell) else { return }
         basketViewModel.positions[index.row].stepper = step
         basketViewModel.positions[index.row].basketCoast = coast
-        
-        
-
-//        if (basketViewModel.positions.reduce(0, { $0 + $1.mass * $1.stepper})) >= 3000 {
-//                    // Применить перечеркивание
-//                    label.attributedText = NSAttributedString(
-//                        string: label.text ?? "",
-//                        attributes: [
-//                            .strikethroughStyle: NSUnderlineStyle.single.rawValue,
-//                            .strikethroughColor: UIColor.red,])
-//            myTableView.reloadData()
-//                } else {
-//                    print("Removing strikethrough")
-//                    // Убрать перечеркивание
-//                    label.attributedText = nil
-//                    myTableView.reloadData()
-//                }
-                
-
         updateTotalCost()
-        summLabel.text = "\(totalCoast) грн"
+        summCoastLabel.text = "\(totalCoast) грн"
+       // BasketViewModel.shared.attributedLabel(label: summLabel)
         myTableView.reloadData()
         BasketModel.save(basketViewModel.positions)
+       
     }
 }
 
@@ -232,5 +210,6 @@ extension BasketViewController: UIPickerViewDelegate {
     
 }
     
+
 
 

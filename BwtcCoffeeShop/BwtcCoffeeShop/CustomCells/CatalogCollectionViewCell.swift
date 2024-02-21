@@ -15,7 +15,7 @@ protocol CategoryCellConfigurable {
 class CatalogCollectionViewCell: UICollectionViewCell {
     var categoryImage = UIImageView()
     var categoryName = UILabel()
-   weak var catalogViewController: CatalogViewController?
+  // weak var catalogViewController: CatalogViewController?
     
     var category: Category? {
         didSet {

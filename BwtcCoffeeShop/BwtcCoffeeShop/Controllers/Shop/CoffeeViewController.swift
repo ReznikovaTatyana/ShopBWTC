@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import FirebaseStorage
+import Firebase
+import FirebaseDatabase
+import FirebaseFirestore
 
 
 class CoffeeViewController: UIViewController {
@@ -23,17 +27,23 @@ class CoffeeViewController: UIViewController {
         return cv
         }()
     
-    var contentCoffeeShopCell: CoffeeSmallPacks = CoffeeSmallPacks()
+    lazy var contentCoffeeShopCell: ShopViewModel = ShopViewModel()
     let detailViewController = CoffeeDetailViewController()
     lazy var sourse: [SectionCoffee] = [
-        SectionCoffee(sectionName: "Pack 250gr", coffee: contentCoffeeShopCell.goods),
-     SectionCoffee(sectionName: "Pack 1gr", coffee: contentCoffeeShopCell.bigPackArray) ]
+        SectionCoffee(sectionName: "Pack 250gr", coffee: contentCoffeeShopCell.packCoffeeArray),
+        SectionCoffee(sectionName: "Pack 1gr", coffee: contentCoffeeShopCell.bigPackArray) ]
 
+   
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupViews()
+        addFirebase()
+        
     }
+    
     
     func setupViews() {
         let segmentLanguageItem = customSegment()
@@ -45,10 +55,31 @@ class CoffeeViewController: UIViewController {
         createCollectionView()
     }
 
+    
+    func addFirebase() {
+        collectionViewCoffee.reloadData()
+        
+        self.contentCoffeeShopCell.updateGoodsFromFirebase { [weak self] in
+            
+            
+            self?.collectionViewCoffee.reloadData()
+            print(self?.contentCoffeeShopCell.packCoffeeArray.count ?? 0)
+        }
+            self.contentCoffeeShopCell.updateGoodsFromFirebaseBigPack { [weak self] in
+                self?.collectionViewCoffee.reloadData()
+                print(self?.contentCoffeeShopCell.bigPackArray.count ?? 0)
+            
+        }
+        
+    }
+    
+    
+    
     func createCollectionView() {
         collectionViewCoffee.layer.shadowRadius = 10
         collectionViewCoffee.dataSource = self
         collectionViewCoffee.delegate = self
+        
         collectionViewCoffee.reloadData()
         collectionViewCoffee.register(ShopCollectionViewCell.self, forCellWithReuseIdentifier: "\(ShopCollectionViewCell.self)")
         collectionViewCoffee.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderCollectionReusableView.self)")
@@ -62,6 +93,7 @@ class CoffeeViewController: UIViewController {
             collectionViewCoffee.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier:  1)
         ])
     }
+    
 }
 
 extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -71,7 +103,7 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0: return contentCoffeeShopCell.goods.count
+        case 0: return contentCoffeeShopCell.packCoffeeArray.count
         case 1: return contentCoffeeShopCell.bigPackArray.count
         default: break
         }
@@ -82,7 +114,7 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
         if let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
             switch indexPath.section {
             case 0:
-                itemCell.shop = contentCoffeeShopCell.goods[indexPath.item]
+                itemCell.shop = contentCoffeeShopCell.packCoffeeArray[indexPath.item]
             case 1:
                 itemCell.shop = contentCoffeeShopCell.bigPackArray[indexPath.item]
             default: break
@@ -112,12 +144,13 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
         if let menu = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
             switch indexPath.section {
             case 0:
-                menu.shop = contentCoffeeShopCell.goods[indexPath.row]
+                menu.shop = contentCoffeeShopCell.packCoffeeArray[indexPath.row]
                 detailViewController.coffeeGoods = menu.shop
                 detailViewController.labelName.text = menu.shopName.text
                 detailViewController.imageView.image = menu.shopImageView.image
                 detailViewController.labelPrice.text = menu.shopPrice.text
-                detailViewController.textLabel.text = menu.textLabel.text
+                //detailViewController.textLabel.text = menu.textLabel.text
+                detailViewController.infoText.text = menu.textLabel.text
                      navigationController?.pushViewController(detailViewController, animated: true)
             case 1:
                 menu.shop = contentCoffeeShopCell.bigPackArray[indexPath.row]
@@ -125,7 +158,8 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
                 detailViewController.labelName.text = menu.shopName.text
                 detailViewController.imageView.image = menu.shopImageView.image
                 detailViewController.labelPrice.text = menu.shopPrice.text
-                detailViewController.textLabel.text = menu.textLabel.text
+               // detailViewController.textLabel.text = menu.textLabel.text
+                detailViewController.infoText.text = menu.textLabel.text
                 navigationController?.pushViewController(detailViewController, animated: true)
             default:
                 break
@@ -150,22 +184,3 @@ extension CoffeeViewController:  UICollectionViewDelegateFlowLayout {
         }
     }
         
-        
-        
-
-
-
-    
-    
-
-    
-    
-
-    
-    
-
-
-
-
-
-

@@ -31,9 +31,10 @@ class PopularProductsCell: UICollectionViewCell {
             if let text = products?.price {
                 priceProducts.text = "\(text)" + " UAN"
             }
-            if let image = products?.imageName {
-                imageProducts.image = UIImage(named: image)
-                }
+            
+                if let image = URL(string: products?.imageName ?? "") {
+                    imageProducts.sd_setImage(with: image, placeholderImage: UIImage(named: "placeholder"))
+            }
             text.text = products?.text
             }
         }

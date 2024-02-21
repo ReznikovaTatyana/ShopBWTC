@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ShopCollectionViewCell: UICollectionViewCell {
     
@@ -50,25 +51,13 @@ class ShopCollectionViewCell: UICollectionViewCell {
     }()
     
     var grindPicker = UIPickerView()
-    
-    var buyButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Купити", for: .normal)
-        button.setTitleColor(.tabBarItemLight, for: .normal)
-        button.backgroundColor = .mainOragge
-        button.tintColor = .mainOragge
-        button.layer.cornerRadius = 12
-        button.addTarget(ShopCollectionViewCell.self, action: #selector(buttonAction), for: .touchUpInside)
-       return button
-    }()
-    
+    var buyButton = UIButton()
+  
     let identifaer = "ShopCell"
     let grindModel = ModelGrind()
-    let customStepper: CustomStepper = {
-    let stepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-        stepper.addTarget(ShopCollectionViewCell.self, action: #selector(didStepperValueChanged), for: .valueChanged)
-        return stepper
-    }()
+    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+       
+        
   
    
     var shop: Goods? {
@@ -80,6 +69,10 @@ class ShopCollectionViewCell: UICollectionViewCell {
             if let image = shop?.imageName {
                 shopImageView.image = UIImage(named: image)
                 }
+
+                if let imageUrl = URL(string: self.shop?.imageName ?? "") {
+                    self.shopImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+            }
             if let textLab = shop?.text {
                 textLabel.text = textLab
             }
@@ -93,6 +86,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
         makeConstraints()
         didStepperValueChanged()
         setupUI()
+        
     }
    
     required init?(coder: NSCoder) {
@@ -129,16 +123,21 @@ class ShopCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(buyButton)
         grindPicker.delegate = self
         grindPicker.dataSource = self
+        createBuyButton()
+        createCustomStepper()
     }
     
+    private func createBuyButton() {
+        buyButton.setTitle("Купити", for: .normal)
+        buyButton.setTitleColor(.tabBarItemLight, for: .normal)
+        buyButton.backgroundColor = .mainOragge
+        buyButton.tintColor = .mainOragge
+        buyButton.layer.cornerRadius = 12
+        buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    }
     
-    
-    func config(path: String) {
-        if let url = URL(string: path),
-           let data = try? Data(contentsOf: url),
-           let image = UIImage(data: data) {
-            shopImageView.image = image
-        }
+    private func createCustomStepper() {
+        customStepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
     }
     
     // MARK: Add Constraints
@@ -195,16 +194,16 @@ class ShopCollectionViewCell: UICollectionViewCell {
             buyButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6)
         ])
     }
-
+    
     @objc func buttonAction() {
-
-        guard let image = shop?.imageName,
-              let nameText = shopName.text,
+        guard let nameText = shopName.text,
+              let image = shop?.imageName,
               let grindText = pickerText.text,
               let salePrice = shop?.optPrice,
               let countDrip = shop?.countDrip,
               let identifaer = shop?.identifaer,
               let mass = shop?.mass,
+              let countPackDrip = shop?.countPackDrip,
               let price = shop?.price else {return}
         let position = BasketModel(basketImageName: image,
                                    basketName: nameText,
@@ -213,7 +212,8 @@ class ShopCollectionViewCell: UICollectionViewCell {
                                    stepper: customStepper.firstValue,
                                    basketCoast: price * customStepper.firstValue, basketSalePrice: salePrice,
                                    identifaer: identifaer,
-                                   countDrip: countDrip,
+                                   countDrip: countDrip, 
+                                   countPackDrip: countPackDrip,
                                    mass: mass)
         BasketViewModel.shared.addPosition(position: position)
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)
@@ -222,6 +222,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
         print(position.basketName)
         print(position.basketGrind)
     }
+    
     
     @objc private func didStepperValueChanged() {
         
