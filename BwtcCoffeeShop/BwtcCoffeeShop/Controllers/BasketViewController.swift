@@ -18,6 +18,7 @@ class BasketViewController: UIViewController {
         let table = UITableView()
         table.rowHeight = 110
         table.register(BasketTableViewCell.self, forCellReuseIdentifier: "BasketTableViewCell")
+        table.isUserInteractionEnabled = true
         return table
     }()
     
@@ -60,7 +61,7 @@ class BasketViewController: UIViewController {
     }
     
     private func createOrderView() {
-        orderView.layer.borderColor = UIColor.tabBarItemLight.cgColor
+        orderView.layer.borderColor = UIColor.bwtcLightGrey.cgColor
         orderView.layer.borderWidth = 2.0
         orderView.clipsToBounds = true
         orderView.layer.cornerRadius = 20
@@ -79,16 +80,16 @@ class BasketViewController: UIViewController {
     private func createSaleSummLabel() {
         saleSummCoastLabel.textAlignment = .center
         saleSummCoastLabel.font = .systemFont(ofSize: 18)
-        saleSummCoastLabel.textColor = .mainOragge
+        saleSummCoastLabel.textColor = .bwtcOragge
         saleSummCoastLabel.text = "\(saleTotalCoast) грн"
         saleSummCoastLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func createOrderButton() {
         orderButton.setTitle("Замовити", for: .normal)
-        orderButton.setTitleColor(.tabBarItemLight, for: .normal)
-        orderButton.backgroundColor = .mainOragge
-        orderButton.tintColor = .mainOragge
+        orderButton.setTitleColor(.bwtcLightGrey, for: .normal)
+        orderButton.backgroundColor = .bwtcOragge
+        orderButton.tintColor = .bwtcOragge
         orderButton.layer.cornerRadius = 12
         orderButton.addTarget(self, action: #selector(orderButtonAction), for: .touchUpInside)
         orderButton.translatesAutoresizingMaskIntoConstraints = false
@@ -137,13 +138,12 @@ class BasketViewController: UIViewController {
     }
     
     @objc func orderButtonAction() {
-        let viewController = RegistrationViewController()
+        let viewController = AuthorizationViewController()
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func updateTotalCost() {
         saleTotalCoast = basketViewModel.calculateSaleTotalCost()
-            //summLabel.text = "\(totalCoast) грн"
         saleSummCoastLabel.text = "\(saleTotalCoast) грн"
         
         }
@@ -179,12 +179,17 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
             
         }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Опціонально, реагуємо на вибір ячейки
+        print("Ви вибрали рядок \(indexPath.row)")
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             basketViewModel.removePosition(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.deleteRows(at: [indexPath], with: .left)
             updateTotalCost()
-            tableView.reloadData()
+            //tableView.reloadData()
         }
     }
     

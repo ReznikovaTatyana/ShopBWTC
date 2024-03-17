@@ -28,7 +28,7 @@ class AllDetailViewController: UIViewController {
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 18)
         label.numberOfLines = 0
-        label.textColor = .mainOragge
+        label.textColor = .bwtcOragge
         return label
     }()
     
@@ -42,7 +42,7 @@ class AllDetailViewController: UIViewController {
     
     var buyButton = UIButton()
       
-    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+    let customStepper = CustomStepper(viewData: .init(color: .bwtcOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
     
     let grindModel = ModelGrind()
     var shop: Goods?
@@ -69,8 +69,8 @@ class AllDetailViewController: UIViewController {
 
     private func createBuyButton() {
         buyButton.setTitle("Kупити", for: .normal)
-        buyButton.setTitleColor(UIColor.tabBarItemLight, for: .normal)
-        buyButton.backgroundColor = .mainOragge
+        buyButton.setTitleColor(UIColor.bwtcLightGrey, for: .normal)
+        buyButton.backgroundColor = .bwtcOragge
         buyButton.layer.cornerRadius = 12
         buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     }

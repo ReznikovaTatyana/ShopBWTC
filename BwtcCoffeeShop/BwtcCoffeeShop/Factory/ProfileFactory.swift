@@ -14,7 +14,7 @@ class ProfileViewControllerFactory {
             return PaymentDeliveryViewController()
                  
         case "Увійти":
-            return RegistrationViewController()
+            return AuthorizationViewController()
         case "Мої замовлення":
             return PaymentDeliveryViewController()
         case "Зміна профіля":

@@ -17,6 +17,9 @@
 		046908562B8269900092EADB /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046908552B8269900092EADB /* RegistrationViewController.swift */; };
 		046908582B86A70C0092EADB /* RegistrationCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046908572B86A70C0092EADB /* RegistrationCustomView.swift */; };
 		0476E9BF2AA0A21B0077EDA2 /* CatalogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476E9BE2AA0A21B0077EDA2 /* CatalogModel.swift */; };
+		04817CA92B8BDACB000A565C /* GoogleService-Info-2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04817CA82B8BDACB000A565C /* GoogleService-Info-2.plist */; };
+		04817CAB2B934696000A565C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04817CAA2B934695000A565C /* GoogleService-Info.plist */; };
+		04817CAD2B948FA7000A565C /* NewUserRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04817CAC2B948FA6000A565C /* NewUserRegistrationViewController.swift */; };
 		0486940A2A0678EC005169EF /* GrindModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048694092A0678EC005169EF /* GrindModel.swift */; };
 		0486940C2A08F4C2005169EF /* HomeImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486940B2A08F4C2005169EF /* HomeImageCell.swift */; };
 		0486940E2A08F50D005169EF /* PopularProductsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0486940D2A08F50D005169EF /* PopularProductsCell.swift */; };
@@ -45,7 +48,6 @@
 		04BD4E862B5EE164004EE1B9 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4E852B5EE164004EE1B9 /* APIManager.swift */; };
 		04BD4E882B5EF4EC004EE1B9 /* CoffeeShopModelAPILayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD4E872B5EF4EC004EE1B9 /* CoffeeShopModelAPILayer.swift */; };
 		04E8B7DA2B5AD0DC00E631A1 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E8B7D92B5AD0DC00E631A1 /* HomeViewModel.swift */; };
-		04E8B7E02B5AD9CD00E631A1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04E8B7DF2B5AD9CD00E631A1 /* GoogleService-Info.plist */; };
 		04EA96FF2A68039400FBA0E0 /* BasketUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EA96FE2A68039400FBA0E0 /* BasketUserDefaults.swift */; };
 		04EC590E2A2A4BAD00F40105 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC590D2A2A4BAD00F40105 /* BasketTableViewCell.swift */; };
 		04EC59102A2A581200F40105 /* BasketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC590F2A2A581200F40105 /* BasketModel.swift */; };
@@ -80,6 +82,9 @@
 		046908552B8269900092EADB /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		046908572B86A70C0092EADB /* RegistrationCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCustomView.swift; sourceTree = "<group>"; };
 		0476E9BE2AA0A21B0077EDA2 /* CatalogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CatalogModel.swift; path = ../CustomCells/CatalogModel.swift; sourceTree = "<group>"; };
+		04817CA82B8BDACB000A565C /* GoogleService-Info-2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info-2.plist"; path = "../../../../Downloads/GoogleService-Info-2.plist"; sourceTree = "<group>"; };
+		04817CAA2B934695000A565C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		04817CAC2B948FA6000A565C /* NewUserRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserRegistrationViewController.swift; sourceTree = "<group>"; };
 		048694092A0678EC005169EF /* GrindModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrindModel.swift; sourceTree = "<group>"; };
 		0486940B2A08F4C2005169EF /* HomeImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeImageCell.swift; sourceTree = "<group>"; };
 		0486940D2A08F50D005169EF /* PopularProductsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularProductsCell.swift; sourceTree = "<group>"; };
@@ -110,7 +115,6 @@
 		04BD4E852B5EE164004EE1B9 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		04BD4E872B5EF4EC004EE1B9 /* CoffeeShopModelAPILayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeShopModelAPILayer.swift; sourceTree = "<group>"; };
 		04E8B7D92B5AD0DC00E631A1 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewModel.swift; path = "../../../../../Documents/Курсы/Git repository/BwtcCoffeeShop/Models/HomeViewModel.swift"; sourceTree = "<group>"; };
-		04E8B7DF2B5AD9CD00E631A1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04EA96FE2A68039400FBA0E0 /* BasketUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketUserDefaults.swift; sourceTree = "<group>"; };
 		04EC590D2A2A4BAD00F40105 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		04EC590F2A2A581200F40105 /* BasketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketModel.swift; sourceTree = "<group>"; };
@@ -218,7 +222,8 @@
 		04ADD71829F1A01600C68331 /* BwtcCoffeeShop */ = {
 			isa = PBXGroup;
 			children = (
-				04E8B7DF2B5AD9CD00E631A1 /* GoogleService-Info.plist */,
+				04817CA82B8BDACB000A565C /* GoogleService-Info-2.plist */,
+				04817CAA2B934695000A565C /* GoogleService-Info.plist */,
 				04ADD73829F2B1DC00C68331 /* Aplication */,
 				04ADD72D29F1A06A00C68331 /* Controllers */,
 				0429D25D29F538C60015EE90 /* CustomCells */,
@@ -281,6 +286,7 @@
 				04EE2F1D2B7EBCA200A576F5 /* PaymentDeliveryViewController.swift */,
 				046908512B8231FA0092EADB /* AdressViewController.swift */,
 				046908552B8269900092EADB /* RegistrationViewController.swift */,
+				04817CAC2B948FA6000A565C /* NewUserRegistrationViewController.swift */,
 			);
 			path = ProfileGroup;
 			sourceTree = "<group>";
@@ -376,8 +382,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04817CA92B8BDACB000A565C /* GoogleService-Info-2.plist in Resources */,
 				04ADD72629F1A01800C68331 /* LaunchScreen.storyboard in Resources */,
-				04E8B7E02B5AD9CD00E631A1 /* GoogleService-Info.plist in Resources */,
+				04817CAB2B934696000A565C /* GoogleService-Info.plist in Resources */,
 				04ADD72329F1A01800C68331 /* Assets.xcassets in Resources */,
 				04A4876F29F7B5BA006D36CC /* Ysabeau-Italic.ttf in Resources */,
 			);
@@ -447,6 +454,7 @@
 				04A4876C29F5B7A6006D36CC /* DrippViewController.swift in Sources */,
 				04A4876629F5B73D006D36CC /* CoffeeViewController.swift in Sources */,
 				0486940E2A08F50D005169EF /* PopularProductsCell.swift in Sources */,
+				04817CAD2B948FA7000A565C /* NewUserRegistrationViewController.swift in Sources */,
 				04A4876229F53F16006D36CC /* CatalogCollectionViewCell.swift in Sources */,
 				04EA96FF2A68039400FBA0E0 /* BasketUserDefaults.swift in Sources */,
 				04BD4E862B5EE164004EE1B9 /* APIManager.swift in Sources */,
@@ -494,6 +502,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -525,6 +534,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -542,12 +552,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ENABLE_BARE_SLASH_REGEX = NO;
+				SWIFT_ENABLE_EMIT_CONST_VALUES = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -556,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -587,7 +600,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -598,11 +611,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENABLE_BARE_SLASH_REGEX = NO;
+				SWIFT_ENABLE_EMIT_CONST_VALUES = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -614,12 +629,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BwtcCoffeeShop/BwtcCoffeeShop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BwtcCoffeeShop/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -630,10 +647,13 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MERGED_BINARY_TYPE = none;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = tatiana.BwtcCoffeeShop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ENABLE_BARE_SLASH_REGEX = NO;
+				SWIFT_ENABLE_EMIT_CONST_VALUES = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -645,12 +665,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BwtcCoffeeShop/BwtcCoffeeShop.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BwtcCoffeeShop/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
@@ -661,10 +683,13 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MERGED_BINARY_TYPE = none;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = tatiana.BwtcCoffeeShop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ENABLE_BARE_SLASH_REGEX = NO;
+				SWIFT_ENABLE_EMIT_CONST_VALUES = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

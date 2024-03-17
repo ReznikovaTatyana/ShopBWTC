@@ -65,9 +65,9 @@ class HomeImage: UICollectionViewCell, HomeImageProtocol {
             imagePageControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
         imagePageControl.numberOfPages = seriesImages.count
-        imagePageControl.pageIndicatorTintColor = .tabBarItemAccent
+        imagePageControl.pageIndicatorTintColor = .bwtcGrey
         imagePageControl.currentPage = seriesImages.count
-        imagePageControl.currentPageIndicatorTintColor = .mainOragge
+        imagePageControl.currentPageIndicatorTintColor = .bwtcOragge
         //imagePageControl.backgroundStyle = .automatic
         imagePageControl.addTarget(self, action: #selector(pageDidChange(_sende: )), for: .valueChanged)
     }

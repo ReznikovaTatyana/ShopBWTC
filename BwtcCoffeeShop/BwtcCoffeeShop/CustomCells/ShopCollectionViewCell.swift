@@ -36,7 +36,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
         labelPrice.textAlignment = .center
         labelPrice.font = UIFont.systemFont(ofSize: 15)
         labelPrice.font = UIFont.preferredFont(forTextStyle: .body)
-        labelPrice.textColor = .mainOragge
+        labelPrice.textColor = .bwtcOragge
         return labelPrice
     }()
     
@@ -46,7 +46,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
         grindLabel.numberOfLines = 0
         grindLabel.textAlignment = .center
         grindLabel.font = UIFont.systemFont(ofSize: 14)
-        grindLabel.textColor = .tabBarItemAccent
+        grindLabel.textColor = .bwtcGrey
         return grindLabel
     }()
     
@@ -55,7 +55,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
   
     let identifaer = "ShopCell"
     let grindModel = ModelGrind()
-    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+    let customStepper = CustomStepper(viewData: .init(color: .bwtcOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
        
         
   
@@ -97,7 +97,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
           contentView.layer.cornerRadius = 12.0
           contentView.layer.borderWidth = 0.0
           contentView.clipsToBounds = true
-          contentView.layer.shadowColor = UIColor.tabBarItemAccent.cgColor
+          contentView.layer.shadowColor = UIColor.bwtcGrey.cgColor
           contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
           contentView.layer.shadowRadius = 4.0
           contentView.layer.shadowOpacity = 1
@@ -129,9 +129,9 @@ class ShopCollectionViewCell: UICollectionViewCell {
     
     private func createBuyButton() {
         buyButton.setTitle("Купити", for: .normal)
-        buyButton.setTitleColor(.tabBarItemLight, for: .normal)
-        buyButton.backgroundColor = .mainOragge
-        buyButton.tintColor = .mainOragge
+        buyButton.setTitleColor(.bwtcLightGrey, for: .normal)
+        buyButton.backgroundColor = .bwtcOragge
+        buyButton.tintColor = .bwtcOragge
         buyButton.layer.cornerRadius = 12
         buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     }

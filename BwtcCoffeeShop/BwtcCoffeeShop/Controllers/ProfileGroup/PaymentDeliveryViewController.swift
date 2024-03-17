@@ -56,7 +56,7 @@ class PaymentDeliveryViewController: UIViewController {
         let attributed = NSMutableAttributedString(string: text)
         for rangeString in ranges {
             let range = (text as NSString).range(of: rangeString)
-            attributed.addAttribute(.foregroundColor, value: UIColor.mainOragge, range: range)
+            attributed.addAttribute(.foregroundColor, value: UIColor.bwtcOragge, range: range)
             attributed.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 19), range: range)
         }
         paymentTextView.attributedText = attributed

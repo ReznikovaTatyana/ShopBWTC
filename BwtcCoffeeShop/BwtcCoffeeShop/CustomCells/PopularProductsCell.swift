@@ -99,7 +99,7 @@ class PopularProductsCell: UICollectionViewCell {
         priceProducts.numberOfLines = 2
         priceProducts.font = UIFont.systemFont(ofSize: 13)
         priceProducts.textAlignment = .center
-        priceProducts.textColor = .mainOragge
+        priceProducts.textColor = .bwtcOragge
         priceProducts.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             priceProducts.centerXAnchor.constraint(equalTo: imageProducts.centerXAnchor),

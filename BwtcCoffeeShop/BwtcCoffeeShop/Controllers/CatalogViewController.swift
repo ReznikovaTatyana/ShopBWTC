@@ -20,7 +20,7 @@ class CatalogViewController: UIViewController {
         layout.collectionView?.clipsToBounds = true
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = .init(top: 15, left: 10, bottom: 10, right: 10)
-        layout.collectionView?.backgroundColor = .mainOragge
+        layout.collectionView?.backgroundColor = .bwtcOragge
         layout.collectionView?.clipsToBounds = true
         return cv
     }()

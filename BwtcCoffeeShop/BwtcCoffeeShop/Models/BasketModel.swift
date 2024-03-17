@@ -37,22 +37,7 @@ class BasketModel: Codable {
         self.countPackDrip = countPackDrip
         self.mass = mass
        
-    }
-    //{
-//        get {
-//            var result = Int()
-//            if stepper == 0 {
-//                result = basketPrice * (stepper + 1)
-//            } else {
-//                result = basketPrice * stepper
-//        }
-//            return result
-//        }
-    
-    
-    //}
-    
-    
+    } 
 }
 
 class BasketViewModel {
@@ -112,7 +97,7 @@ class BasketViewModel {
 func isContain(model: BasketModel) -> Bool {
     for item in positions {
         if item.basketGrind.count > 2 {
-        if item.basketGrind == model.basketGrind && item.basketName == model.basketName {
+            if item.basketGrind == model.basketGrind && item.basketName == model.basketName, item.mass == model.mass {
             return true
         }
         } else {

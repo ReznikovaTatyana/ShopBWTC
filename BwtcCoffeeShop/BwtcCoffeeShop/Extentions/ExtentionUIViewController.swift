@@ -10,7 +10,7 @@ import UIKit
 extension UIViewController {
     
     func createCustomNavigationBar() {
-        navigationController?.navigationBar.barTintColor = .mainOragge
+        navigationController?.navigationBar.barTintColor = .bwtcOragge
         
     }
     
@@ -21,7 +21,7 @@ extension UIViewController {
         let titlelabel = UILabel()
         titlelabel.text = "b  w  t  c"
         titlelabel.textAlignment = .center
-        titlelabel.textColor = .mainOragge
+        titlelabel.textColor = .bwtcOragge
         titlelabel.font = UIFont.systemFont(ofSize: 44)
         titlelabel.frame = CGRect(x: 14, y: -7, width: 170, height: 50)
         view.addSubview(titlelabel)
@@ -34,7 +34,7 @@ extension UIViewController {
         languageSegment = UISegmentedControl(items: languagesArray)
         languageSegment.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         languageSegment.backgroundColor = .clear
-        languageSegment.selectedSegmentTintColor = .mainOragge
+        languageSegment.selectedSegmentTintColor = .bwtcOragge
         let languageBarItem = UIBarButtonItem(customView: languageSegment)
         return languageBarItem
     }

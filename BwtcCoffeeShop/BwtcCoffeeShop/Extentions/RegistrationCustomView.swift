@@ -15,7 +15,7 @@ class RegistrationCustomView: UIControl {
     let buttonCustomView = UIButton()
     let containerCustomView = UIView()
     
-    weak var delegate: CustomViewDelegate?
+   
         
     
     struct ContainerData {
@@ -56,7 +56,7 @@ class RegistrationCustomView: UIControl {
     private func createLabelCustomView() {
         labelCustomView.translatesAutoresizingMaskIntoConstraints = false
         labelCustomView.text = conteinerData.labelText
-        labelCustomView.textColor = .mainOragge
+        labelCustomView.textColor = .bwtcOragge
         labelCustomView.textAlignment = .left
         labelCustomView.font = UIFont.systemFont(ofSize: 18)
     }
@@ -64,7 +64,7 @@ class RegistrationCustomView: UIControl {
     private func createImageViewCustomView() {
         imageViewCustomView.translatesAutoresizingMaskIntoConstraints = false
         imageViewCustomView.image = UIImage(systemName:  "chevron.right")
-        imageViewCustomView.tintColor = .mainOragge
+        imageViewCustomView.tintColor = .bwtcOragge
     }
     
     private func createContainerCustomView() {
@@ -72,7 +72,7 @@ class RegistrationCustomView: UIControl {
         containerCustomView.backgroundColor = .clear
         containerCustomView.layer.borderWidth = 1.0
         containerCustomView.layer.cornerRadius = 7
-        containerCustomView.layer.borderColor = UIColor.tabBarItemLight.cgColor
+        containerCustomView.layer.borderColor = UIColor.bwtcLightGrey.cgColor
     }
     
     private func makeConstraints() {
@@ -101,8 +101,8 @@ class RegistrationCustomView: UIControl {
     
     @objc func  newUserButtonAction(_ sender: UIButton) {
         switch conteinerData.labelText {
-        case "Я новий користувач":  delegate?.didTapNewUserButton()
-        case "У мене вже є акаунт": delegate?.didTapUserButton()
+        //case "Я новий користувач":  delegate?.didTapNewUserButton()
+       // case "У мене вже є акаунт": delegate?.didTapUserButton()
         default:
             break
         }

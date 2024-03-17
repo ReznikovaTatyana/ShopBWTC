@@ -23,7 +23,7 @@ class BasketTableViewCell: UITableViewCell {
     var grindLabel = UILabel()
     var priceLabel = UILabel()
     var costLabel = UILabel()
-    var customStepper = CustomStepper(viewData:  .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+    var customStepper = CustomStepper(viewData:  .init(color: .bwtcOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
     
     var costSaleLabel = UILabel()
        
@@ -96,19 +96,19 @@ class BasketTableViewCell: UITableViewCell {
     private func createGrindLabel() {
         grindLabel.translatesAutoresizingMaskIntoConstraints = false
         grindLabel.font = UIFont.systemFont(ofSize: 14)
-        grindLabel.textColor = .tabBarItemAccent
+        grindLabel.textColor = .bwtcGrey
     }
     
     private func createPriceLabel() {
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.font = UIFont.systemFont(ofSize: 14)
-        priceLabel.textColor = .mainOragge
+        priceLabel.textColor = .bwtcOragge
     }
     
     private func createCostSaleLabel() {
         costSaleLabel.translatesAutoresizingMaskIntoConstraints = false
         costSaleLabel.numberOfLines = 0
-        costSaleLabel.textColor = .mainOragge
+        costSaleLabel.textColor = .bwtcOragge
         costSaleLabel.font = UIFont.systemFont(ofSize: 14)
     }
     
@@ -151,13 +151,7 @@ class BasketTableViewCell: UITableViewCell {
         ])
     }
     
-//    private func addUnderline(label: UILabel) {
-//        label.attributedText = NSAttributedString(string: label.text ?? "" , attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.red])
-//    }
-//    
-//    private func removeUnderline(label: UILabel) {
-//        label.attributedText = NSAttributedString(string: label.text ?? "" , attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.clear])
-//    }
+
     
     func textFunc() {
         if costSaleLabel.text != "" {

@@ -40,10 +40,10 @@ class MainTabBarViewController: UITabBarController {
     //MARK: Налаштовує зовнішній вигляд та елементи керування таббару.
     private func setTabBarAppearence() {
         tabBar.itemPositioning = .centered
-        tabBar.tintColor = .tabBarItemAccent
-        tabBar.unselectedItemTintColor = .tabBarItemLight
-        tabBar.backgroundColor = .mainOragge
-    }    
+        tabBar.tintColor = .bwtcGrey
+        tabBar.unselectedItemTintColor = .bwtcLightGrey
+        tabBar.backgroundColor = .bwtcOragge
+    }
 }
     
    
