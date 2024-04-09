@@ -6,10 +6,10 @@
 //
 
 import UIKit
-
+//MARK: - Клас екрану, на якому відображається колекція з усіма категоріями товарів
 class CatalogViewController: UIViewController {
     
-    
+    //MARK: - Колекція для відображення категорій товарів
     var collectionViewCatalog: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -25,37 +25,43 @@ class CatalogViewController: UIViewController {
         return cv
     }()
     
-    
+    //MARK: - Об'єкт для управління категоріями товарів
     var categoriesForCatalog: CategoriesForCatalogProtocol = CategoriesForCatalog()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
-    
+  
+    //MARK: - Метод для додавання обєктів та розвантаження viewDidLoad
     private func setupViews() {
         createSearch()
         createCollectionView()
         makeConstraints()
+        createNavigationItem()
+        
+    }
+    
+    //MARK: - Метод для налаштування навігації
+    private func createNavigationItem() {
         let logoImageItem = createCustomTitleView()
-
         navigationItem.titleView = logoImageItem
     }
     
-    
+    //MARK: - Метод для налаштування колекція категорій товарів
    private func createCollectionView() {
         view.addSubview(collectionViewCatalog)
         collectionViewCatalog.frame = view.bounds
         collectionViewCatalog.layer.shadowRadius = 10
         collectionViewCatalog.backgroundColor = .white
-        //collectionViewCatalog.clipsToBounds = true
         collectionViewCatalog.dataSource = self
         collectionViewCatalog.delegate = self
         collectionViewCatalog.reloadData()
         collectionViewCatalog.register(CatalogCollectionViewCell.self, forCellWithReuseIdentifier: "\(CatalogCollectionViewCell.self)")
         
     }
-    
+   
+    //MARK: - Метод для створення та налаштування констрейнтів об'єктів екрана
     func makeConstraints() {
         collectionViewCatalog.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -69,7 +75,7 @@ class CatalogViewController: UIViewController {
     
 }
 
-
+//MARK: - Методи Delegate та DataSource для налаштуваня колекції
 extension CatalogViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categoriesForCatalog.categories.count
@@ -97,6 +103,7 @@ extension CatalogViewController: UICollectionViewDataSource, UICollectionViewDel
     
 }
 
+//MARK: -
 extension CatalogViewController:  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         

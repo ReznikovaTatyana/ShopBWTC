@@ -1,5 +1,5 @@
 //
-//  FirstScreenViewController.swift
+//  HomeViewController.swift
 //  BwtcCoffeeShop
 //
 //  Created by mac on 20.04.2023.
@@ -19,13 +19,13 @@ protocol CoffeeDetailProtocol {
     
 }
 
-// MARK: Клас для першого екрану додатка, який відображає зображення та популярні товари
-class FirstScreenViewController: UIViewController {
+// MARK: - Клас для першого екрану додатка, який відображає зображення та популярні товари
+class HomeViewController: UIViewController {
     
-    // MARK: Об'єкт для керування сторінками зображень
+    // MARK: - Об'єкт для керування сторінками зображень
     let imagePageControl = UIPageControl()
    
-    // MARK: Колекція для відображення горизонтальної каруселі зображень
+    // MARK: - Колекція для відображення горизонтальної каруселі зображень
     var imageCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -39,7 +39,7 @@ class FirstScreenViewController: UIViewController {
         }()
     
     
-    //MARK: Колекція для відображення вертикального списку популярних товарів
+    //MARK: - Колекція для відображення вертикального списку популярних товарів
     var popularProductsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let productsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -52,15 +52,15 @@ class FirstScreenViewController: UIViewController {
         return productsCollectionView
         }()
     
-    //MARK: Об'єкт для управління зображеннями на головному екрані
+    //MARK: - Об'єкт для управління зображеннями на головному екрані
     var homeImage: HomeImageProtocol = HomeViewModel()
     
-    // MARK: Об'єкт для управління популярними товарами на головному екрані
+    // MARK: - Об'єкт для управління популярними товарами на головному екрані
     var popularProductsViewModel = PopularProductsViewModel()
    
     var detailViewController = CoffeeDetailViewController()
     
-    //MARK: Масив секцій з популярними товарами
+    //MARK: - Масив секцій з популярними товарами
     lazy var section: [SectionCoffee] = [
         SectionCoffee(sectionName: "Популярні товари", coffee: popularProductsViewModel.popularProductsArray)]
     
@@ -75,7 +75,7 @@ class FirstScreenViewController: UIViewController {
         setupViews()
     }
     
-    //MARK: Налаштовує елементи інтерфейсу
+    //MARK: - Налаштовує елементи інтерфейсу
     private func setupViews() {
         addFirebase()
         createCustomNavigationBar()
@@ -86,20 +86,20 @@ class FirstScreenViewController: UIViewController {
         setupNavigationItems()
     }
     
-    //MARK: Налаштовує елементи навігації
+    //MARK: - Налаштовує елементи навігації
     private func setupNavigationItems() {
         let logoImageItem = createCustomTitleView()
         navigationItem.titleView = logoImageItem
     }
     
-    //MARK: Оновлює дані товарів з Firebase для розділу популярних продуктів та перезавантажує колекцію.
+    //MARK: - Оновлює дані товарів з Firebase для розділу популярних продуктів та перезавантажує колекцію.
     private func addFirebase() {
         popularProductsViewModel.updateGoodsFromFirebasePopularPack { [weak self] in
             self?.popularProductsCollectionView.reloadData()
         }
     }
     
-    //MARK:  Створює та налаштовує StackView
+    //MARK: - Створює та налаштовує StackView
     private func setupStackView() {
             view.addSubview(stackView)
             stackView.axis = .vertical
@@ -112,7 +112,7 @@ class FirstScreenViewController: UIViewController {
         }
  
    
-    //MARK: Створює та налаштовує колекцію для відображення горизонтальної каруселі зображень
+    //MARK: - Створює та налаштовує колекцію для відображення горизонтальної каруселі зображень
     func setupImageCollectionView() {
         stackView.addArrangedSubview(imageCollectionView)
         //view.addSubview(imageCollectionView)
@@ -124,7 +124,7 @@ class FirstScreenViewController: UIViewController {
     }
 
     
-    //MARK: Створює та налаштовує колекцію для відображення вертикального списку популярних товарів
+    //MARK: - Створює та налаштовує колекцію для відображення вертикального списку популярних товарів
     func setupProductsCollectionView() {
         stackView.addArrangedSubview(popularProductsCollectionView)
         //self.view.addSubview(popularProductsCollectionView)
@@ -138,7 +138,7 @@ class FirstScreenViewController: UIViewController {
     }
     
     
-   //MARK: Встановлення загальних констрейнтів для обох колекцій
+   //MARK: -  Встановлення загальних констрейнтів для обох колекцій
     func makeConstraints(to collectionView: UICollectionView) {
         NSLayoutConstraint.activate([
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -157,11 +157,15 @@ class FirstScreenViewController: UIViewController {
     
 }
 
-
-extension FirstScreenViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+//MARK: - Методи Delegate та DataSource дляHomeViewController
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    //MARK:  Метод який повертає кількість секцій в колеції
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
+    //MARK:  Метод який визначає кількість елементів у секції колекції
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == imageCollectionView {
         return homeImage.seriesImages.count
@@ -170,7 +174,7 @@ extension FirstScreenViewController: UICollectionViewDelegate, UICollectionViewD
         }
     }
     
-    
+    //MARK:  Метод налаштування кожної клітинки у колекції.
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == imageCollectionView {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeImage", for: indexPath) as? HomeImage {
@@ -188,6 +192,7 @@ extension FirstScreenViewController: UICollectionViewDelegate, UICollectionViewD
 
     
     
+    //MARK: Метод викликається, коли користувач торкається або натискає на елемент колекції.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
         if  collectionView == popularProductsCollectionView {
             let menu =  PopularProductsCell()
@@ -202,6 +207,7 @@ extension FirstScreenViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     
+    //MARK: Метод для втановлення та повернення виду заголовка 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
             if kind == UICollectionView.elementKindSectionHeader {
                 if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HomeHeaderCollectionReusableView", for: indexPath) as? HomeHeaderCollectionReusableView {
@@ -212,7 +218,8 @@ extension FirstScreenViewController: UICollectionViewDelegate, UICollectionViewD
         }
 }
 
-extension FirstScreenViewController:  UICollectionViewDelegateFlowLayout {
+//MARK: - 
+extension HomeViewController:  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionView == imageCollectionView {

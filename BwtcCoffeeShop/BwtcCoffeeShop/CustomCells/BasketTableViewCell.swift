@@ -39,8 +39,8 @@ class BasketTableViewCell: UITableViewCell {
                   let grindText = position?.basketGrind,
                   let priceText = position?.basketPrice,
                   let stepper = position?.stepper,
-                  let text = position?.coastSaleText,
-                  let coast = position?.basketCoast else {return}
+                  let text = position?.coastSaleText else {return}
+                let coast = BasketViewModel.shared.calculateCost()
                 costLabel.text = String(coast) + "грн"
                 nameLabel.text = nameText
                 grindLabel.text = grindText
@@ -59,6 +59,7 @@ class BasketTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        textFunc()
         setupView()
         makeConstraints()
     }
@@ -78,7 +79,6 @@ class BasketTableViewCell: UITableViewCell {
         createGrindLabel()
         createPriceLabel()
         createCostSaleLabel()
-        textFunc()
         makeConstraints()
     }
     
@@ -169,7 +169,7 @@ class BasketTableViewCell: UITableViewCell {
               let stepper = position?.stepper,
              // let optPrice = position?.basketSalePrice,
               let price = position?.basketPrice else {return}
-        costLabel.text = String (price * stepper) + "грн"
+        costLabel.text = String (coast) + "грн"
         costSaleLabel.text = text
         textFunc()
         delegate?.didStepperValueChanged(self, coast: coast, step: customStepper.firstValue, label: costLabel)

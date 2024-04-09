@@ -7,13 +7,19 @@
 
 import UIKit
 
+//MARK: - Клас екрану корзини, на якому відображається таблиця з товарами доданими у корзину та загальна сума замовлення
 class BasketViewController: UIViewController {
     
-    
+    //MARK: - Об'єкт для керування елементамі корзини
     var basketViewModel: BasketViewModel = BasketViewModel.shared
+   
+    //MARK: - Об'єкт для підрахунку суми всих замовлень
     var totalCoast = 0
+    
+    //MARK: - Об'єкт для підрахунку суми всих замовлень з оптовою ціною
     var saleTotalCoast = 0
     
+    //MARK: - Таблиця для відображення доданиї товарів у корзину
     var myTableView: UITableView = {
         let table = UITableView()
         table.rowHeight = 110
@@ -35,14 +41,14 @@ class BasketViewController: UIViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         setupViews()
-
 }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         myTableView.reloadData()
     }
     
-    
+    //MARK: -  Метод для додавання обєктів та розвантаження viewDidLoad
      func setupViews() {
         let logoImageItem = createCustomTitleView()
         navigationItem.titleView = logoImageItem
@@ -60,6 +66,7 @@ class BasketViewController: UIViewController {
          createOrderButton()
     }
     
+    //MARK: - Метод для створення та налаштування вью з сумою замовлення та переходом до оформелення замовлення
     private func createOrderView() {
         orderView.layer.borderColor = UIColor.bwtcLightGrey.cgColor
         orderView.layer.borderWidth = 2.0
@@ -69,6 +76,7 @@ class BasketViewController: UIViewController {
         
     }
     
+    //MARK: - Метод для налаштування лейблу який відображає суму товарів замовлення
     private func createSummLabel() {
         summCoastLabel.textAlignment = .center
         summCoastLabel.font = .systemFont(ofSize: 18)
@@ -77,6 +85,7 @@ class BasketViewController: UIViewController {
         summCoastLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    //MARK: - Метод для налаштування лейблу який відображає суму товарів замовлення зі знижкою
     private func createSaleSummLabel() {
         saleSummCoastLabel.textAlignment = .center
         saleSummCoastLabel.font = .systemFont(ofSize: 18)
@@ -85,6 +94,7 @@ class BasketViewController: UIViewController {
         saleSummCoastLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    //MARK: - Метод для налаштування кнопки для замовлення товарів
     private func createOrderButton() {
         orderButton.setTitle("Замовити", for: .normal)
         orderButton.setTitleColor(.bwtcLightGrey, for: .normal)
@@ -94,7 +104,8 @@ class BasketViewController: UIViewController {
         orderButton.addTarget(self, action: #selector(orderButtonAction), for: .touchUpInside)
         orderButton.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+   
+    //MARK: - Метод для налаштування лейблу "Сума:"
     private func createSummLabelText() {
         summLabelText.textAlignment = .center
         summLabelText.font = .systemFont(ofSize: 18)
@@ -102,6 +113,7 @@ class BasketViewController: UIViewController {
         summLabelText.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    //MARK: - Метод для створення та налаштування констрейнтів об'єктів екрана
     func makeConstraints() {
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -137,17 +149,16 @@ class BasketViewController: UIViewController {
         ])
     }
     
-    @objc func orderButtonAction() {
-        let viewController = AuthorizationViewController()
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
+    //MARK: - Метод для оновлення значення в об'єктах saleTotalCoast та totalCoast після змін у таблиці
     private func updateTotalCost() {
         saleTotalCoast = basketViewModel.calculateSaleTotalCost()
+        totalCoast = basketViewModel.calculateTotalCost()
+        summCoastLabel.text = "\(totalCoast) грн"
         saleSummCoastLabel.text = "\(saleTotalCoast) грн"
         
         }
     
+    //MARK: - Метод для оновлення тексту та закреслення тексту у saleSummCoastLabel після змін у таблиці
     private func updateText() {
         if totalCoast == saleTotalCoast {
             saleSummCoastLabel.text = ""
@@ -158,59 +169,75 @@ class BasketViewController: UIViewController {
          
         }
     }
+    
+    //MARK: - Метод який спрацьовує коли користувач гатистув на кнопку Замовити
+    @objc func orderButtonAction() {
+        let viewController = AuthorizationViewController()
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+   
 }
 
+//MARK: - Методи Delegate та DataSource для налаштуваня тадлиці
 extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
+ 
+    //MARK:
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return basketViewModel.positions.count
     }
     
+    //MARK:
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "BasketTableViewCell", for: indexPath) as? BasketTableViewCell {
             cell.position = basketViewModel.positions[indexPath.item]
             totalCoast = basketViewModel.positions.reduce(0) { $0 + $1.basketPrice * $1.stepper }
             summCoastLabel.text = "\(totalCoast) грн"
+            saleSummCoastLabel.text = "\(saleTotalCoast) грн"
             updateTotalCost()
             updateText()
             cell.delegate = self
+           // myTableView.reloadData()
             return cell
         }
             return UITableViewCell()
             
         }
     
+    //MARK:
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Опціонально, реагуємо на вибір ячейки
         print("Ви вибрали рядок \(indexPath.row)")
     }
     
+    //MARK:
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             basketViewModel.removePosition(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
             updateTotalCost()
-            //tableView.reloadData()
+            tableView.reloadData()
         }
     }
     
     
 }
 
+//MARK: -
 extension BasketViewController: BasketTableViewCellDelegate {
-    
     func didStepperValueChanged(_ cell: BasketTableViewCell, coast: Int, step: Int, label: UILabel) {
         guard let index = myTableView.indexPath(for: cell) else { return }
         basketViewModel.positions[index.row].stepper = step
         basketViewModel.positions[index.row].basketCoast = coast
         updateTotalCost()
         summCoastLabel.text = "\(totalCoast) грн"
-       // BasketViewModel.shared.attributedLabel(label: summLabel)
         myTableView.reloadData()
         BasketModel.save(basketViewModel.positions)
        
     }
 }
 
+//MARK: -
 extension BasketViewController: UIPickerViewDelegate {
     
 }

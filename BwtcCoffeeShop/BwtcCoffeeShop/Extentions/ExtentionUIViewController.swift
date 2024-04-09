@@ -28,6 +28,30 @@ extension UIViewController {
         return view
     }
     
+    func createCustomTitleNBView(title: String) -> UIView {
+        let view = UIView()
+        view.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
+        let titlelabel = UILabel()
+        titlelabel.text = title
+        titlelabel.textAlignment = .left
+        titlelabel.textColor = .bwtcOragge
+        titlelabel.font = UIFont.systemFont(ofSize: 20)
+        titlelabel.frame = CGRect(x: 0, y: -20, width: 200, height: 50)
+        let underlineView = UIView()
+        underlineView.backgroundColor = .black
+        //view.addSubview(underlineView)
+
+//        underlineView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            underlineView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            underlineView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            underlineView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            underlineView.heightAnchor.constraint(equalToConstant: 1)
+//        ])
+        view.addSubview(titlelabel)
+        return view
+    }
+    
     func customSegment() -> UIBarButtonItem {
         var languageSegment = UISegmentedControl()
         let languagesArray = ["UA", "EN"]

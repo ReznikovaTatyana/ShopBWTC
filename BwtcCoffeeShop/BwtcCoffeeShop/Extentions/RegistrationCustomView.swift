@@ -111,4 +111,65 @@ class RegistrationCustomView: UIControl {
 }
 
 
+extension UITextField {
+    
+    public func setPlaceholderPadding() {
+         let placeholderText = self.placeholder ?? ""
+         let attributedPlaceholder = NSAttributedString(
+             string: placeholderText,
+             attributes: [
+                 .font: self.font ?? UIFont.systemFont(ofSize: 17.0),
+                 .foregroundColor: UIColor.bwtcLightGrey
+             ]
+         )
+         self.attributedPlaceholder = attributedPlaceholder
+     }
+    
+    public func updateTextFields(placeholder: String, view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        textAlignment = .left
+        self.placeholder = placeholder
+        textColor = .black
+        layer.borderColor = UIColor.black.cgColor
+        borderStyle = .roundedRect
+        self.setPlaceholderPadding()
+        NSLayoutConstraint.activate([
+            centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1)])
+    }
+}
+
+extension UIButton {
+    
+    func customButton (title: String, view: UIView) {
+        setTitle(title, for: .normal)
+        setTitleColor(.bwtcLightGrey, for: .normal)
+        backgroundColor = .bwtcOragge
+        tintColor = .bwtcOragge
+        layer.cornerRadius = 10
+        NSLayoutConstraint.activate([
+            widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+    }
+}
+
+extension UINavigationController {
+    func setupNavBarColor() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.bwtcOragge,
+        NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30)]
+        appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.bwtcOragge,
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25)]
+        self.navigationBar.standardAppearance = appearance
+        self.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationBar.compactAppearance = appearance
+        self.navigationBar.tintColor = .bwtcGrey
+        UIBarButtonItem.appearance().tintColor = .bwtcGrey
+        
+    }
+}
 

@@ -11,7 +11,7 @@ import GoogleSignIn
 import FirebaseAuth
 import GoogleSignInSwift
 import FacebookCore
-
+import  FBSDKCoreKit
 
 
 @main
@@ -20,9 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        ApplicationDelegate.shared.application(
+        FBSDKCoreKit.ApplicationDelegate.shared.application(
                     application,
                     didFinishLaunchingWithOptions: launchOptions)
+                FBSDKCoreKit.Settings.appID = "3168654986601344"
    
         return true
     }

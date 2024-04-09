@@ -7,6 +7,7 @@
 
 import UIKit
 import FacebookCore
+import FirebaseAuth
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -35,11 +36,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UIApplication.shared,
             open: url,
             sourceApplication: nil,
-            annotation: [UIApplication.OpenURLOptionsKey.annotation]
-        )
+            annotation: [UIApplication.OpenURLOptionsKey.annotation])
     }
-
-
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

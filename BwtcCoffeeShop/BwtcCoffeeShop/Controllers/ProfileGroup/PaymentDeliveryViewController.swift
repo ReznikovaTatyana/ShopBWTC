@@ -15,6 +15,7 @@ class PaymentDeliveryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         setupView()
     }
     
