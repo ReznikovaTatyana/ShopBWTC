@@ -206,6 +206,7 @@
 				0437E09E2BA8832E0078F447 /* LoginPasswordAuthenticationViewMode.swift */,
 				0437E0AB2BB0AA8B0078F447 /* FacebookAuthenticationViewModel.swift */,
 				0437E0A32BAA498F0078F447 /* AlertManager.swift */,
+				04BD4E852B5EE164004EE1B9 /* APIManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -285,7 +286,6 @@
 			children = (
 				04ADD71929F1A01600C68331 /* AppDelegate.swift */,
 				04ADD71B29F1A01600C68331 /* SceneDelegate.swift */,
-				04BD4E852B5EE164004EE1B9 /* APIManager.swift */,
 			);
 			path = Aplication;
 			sourceTree = "<group>";
