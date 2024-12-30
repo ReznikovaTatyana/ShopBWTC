@@ -24,6 +24,7 @@
 		046908522B8231FA0092EADB /* AdressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046908512B8231FA0092EADB /* AdressViewController.swift */; };
 		046908562B8269900092EADB /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046908552B8269900092EADB /* AuthorizationViewController.swift */; };
 		046908582B86A70C0092EADB /* RegistrationCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046908572B86A70C0092EADB /* RegistrationCustomView.swift */; };
+		0475D8E42C28CCFD0004F1D6 /* CustomMenuGrindButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0475D8E32C28CCFD0004F1D6 /* CustomMenuGrindButton.swift */; };
 		0476E9BF2AA0A21B0077EDA2 /* CatalogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0476E9BE2AA0A21B0077EDA2 /* CatalogModel.swift */; };
 		04817CA92B8BDACB000A565C /* GoogleService-Info-2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04817CA82B8BDACB000A565C /* GoogleService-Info-2.plist */; };
 		04817CAB2B934696000A565C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04817CAA2B934695000A565C /* GoogleService-Info.plist */; };
@@ -98,6 +99,7 @@
 		046908512B8231FA0092EADB /* AdressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdressViewController.swift; sourceTree = "<group>"; };
 		046908552B8269900092EADB /* AuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		046908572B86A70C0092EADB /* RegistrationCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCustomView.swift; sourceTree = "<group>"; };
+		0475D8E32C28CCFD0004F1D6 /* CustomMenuGrindButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenuGrindButton.swift; sourceTree = "<group>"; };
 		0476E9BE2AA0A21B0077EDA2 /* CatalogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CatalogModel.swift; path = ../CustomCells/CatalogModel.swift; sourceTree = "<group>"; };
 		04817CA82B8BDACB000A565C /* GoogleService-Info-2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info-2.plist"; path = "../../../../Downloads/GoogleService-Info-2.plist"; sourceTree = "<group>"; };
 		04817CAA2B934695000A565C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		0429D25C29F5275D0015EE90 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
+				0475D8E32C28CCFD0004F1D6 /* CustomMenuGrindButton.swift */,
 				0429D25A29F44F0D0015EE90 /* ExtentionUIViewController.swift */,
 				0454CD262A1FC7C000278240 /* CustomStepper.swift */,
 				04ADD73629F2A4E300C68331 /* UIColorExtention.swift */,
@@ -510,6 +513,7 @@
 				04A4876829F5B775006D36CC /* AccessoriesViewController.swift in Sources */,
 				048694102A0E889D005169EF /* DrippCollectionViewCell.swift in Sources */,
 				04EE2F1C2B7E4C8300A576F5 /* ProfileModel.swift in Sources */,
+				0475D8E42C28CCFD0004F1D6 /* CustomMenuGrindButton.swift in Sources */,
 				04EE2F1E2B7EBCA200A576F5 /* PaymentDeliveryViewController.swift in Sources */,
 				04BD4E882B5EF4EC004EE1B9 /* CoffeeShopModelAPILayer.swift in Sources */,
 				04A4876A29F5B794006D36CC /* TeaViewController.swift in Sources */,
@@ -594,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -653,7 +657,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -684,7 +688,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -721,7 +725,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

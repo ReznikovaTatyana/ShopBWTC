@@ -69,6 +69,7 @@ class BasketViewController: UIViewController {
     //MARK: - Метод для створення та налаштування вью з сумою замовлення та переходом до оформелення замовлення
     private func createOrderView() {
         orderView.layer.borderColor = UIColor.bwtcLightGrey.cgColor
+        orderView.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         orderView.layer.borderWidth = 2.0
         orderView.clipsToBounds = true
         orderView.layer.cornerRadius = 20

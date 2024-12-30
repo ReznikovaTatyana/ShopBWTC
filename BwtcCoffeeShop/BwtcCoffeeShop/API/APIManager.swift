@@ -36,11 +36,13 @@ class APIManager {
                        let identifaer = itemData["identifaer"] as? Int,
                        let countDrip = itemData["countDrip"] as? Int,
                        let countPackDrip = itemData["countPackDrip"] as? Int,
+                         let roast = itemData["roast"] as? [String],
                        let optPrice = itemData["optPrice"] as? Int else {
                            print("Error: Unable to parse item data")
                            continue
                    }
 
+                  // print("Roast: \(roast)")
                    var item = Goods()
                    item.name = name
                    item.imageName = imageName
@@ -51,7 +53,9 @@ class APIManager {
                    item.text = text
                    item.identifaer = identifaer
                    item.countPackDrip = countPackDrip
+                   item.roast = roast
                    item.ID = snapshot.key
+                   
                    goods.append(item)
                }
 

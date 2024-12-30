@@ -8,74 +8,55 @@
 import UIKit
 import SDWebImage
 
+
 class ShopCollectionViewCell: UICollectionViewCell {
     
     var textLabel = UILabel()
     var pickerText = UILabel()
-    var shopName: UILabel = {
-        let labelName = UILabel()
-        labelName.clipsToBounds = true
-        labelName.numberOfLines = 0
-        labelName.textAlignment = .center
-        labelName.font = UIFont.systemFont(ofSize: 18)
-        return labelName
-    }()
     
-    var shopImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
-        return imageView
-    }()
+    var roastArray: [String] = []
+   
+    var coffeeNameLabel = UILabel()
+    var coffeeImageView = UIImageView()
+    var coffeePriceLabel = UILabel()
     
-    var shopPrice: UILabel = {
-        let labelPrice = UILabel()
-        labelPrice.clipsToBounds = true
-        labelPrice.numberOfLines = 0
-        labelPrice.textAlignment = .center
-        labelPrice.font = UIFont.systemFont(ofSize: 15)
-        labelPrice.font = UIFont.preferredFont(forTextStyle: .body)
-        labelPrice.textColor = .bwtcOragge
-        return labelPrice
-    }()
+
     
-    var grindLabel: UILabel = {
-        let grindLabel = UILabel()
-        grindLabel.text = "Помел"
-        grindLabel.numberOfLines = 0
-        grindLabel.textAlignment = .center
-        grindLabel.font = UIFont.systemFont(ofSize: 14)
-        grindLabel.textColor = .bwtcGrey
-        return grindLabel
-    }()
-    
-    var grindPicker = UIPickerView()
+   
+    var roastSegment = UISegmentedControl()
     var buyButton = UIButton()
   
-    let identifaer = "ShopCell"
+   // let identifaer = "ShopCell"
     let grindModel = ModelGrind()
     let customStepper = CustomStepper(viewData: .init(color: .bwtcOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
-       
-        
-  
+    let grindRoastView = CustomGrindRoastView()
+    
+    
+     
+   
+
+        let actionClosure = { (action: UIAction) in
+            print(action.title)
+        }
+
+        var menuChildren: [UIMenuElement] = []
+ 
    
     var shop: Goods? {
         didSet {
-            shopName.text = shop?.name
+             coffeeNameLabel.text = shop?.name
             if let text = shop?.price {
-                shopPrice.text = "\(text)" + " UAN"
+              coffeePriceLabel.text = "\(text)" + " UAN"
             }
             if let image = shop?.imageName {
-                shopImageView.image = UIImage(named: image)
+              coffeeImageView.image = UIImage(named: image)
                 }
 
                 if let imageUrl = URL(string: self.shop?.imageName ?? "") {
-                    self.shopImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+                    self.coffeeImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
             }
-            if let textLab = shop?.text {
-                textLabel.text = textLab
-            }
+            guard let shop = shop else { return }
+            updateSegmentControl(with: shop.roast ?? [])
         }
     }
     
@@ -83,15 +64,17 @@ class ShopCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        makeConstraints()
         didStepperValueChanged()
         setupUI()
+       
         
     }
    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     func setupUI() {
           contentView.layer.cornerRadius = 12.0
@@ -113,92 +96,161 @@ class ShopCollectionViewCell: UICollectionViewCell {
     
     //MARK: Add elements to contentView
     func setupView() {
+        
         contentView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        contentView.addSubview(shopImageView)
-        contentView.addSubview(shopName)
-        contentView.addSubview(shopPrice)
-        contentView.addSubview(grindLabel)
-        contentView.addSubview(grindPicker)
-        contentView.addSubview(customStepper)
-        contentView.addSubview(buyButton)
-        grindPicker.delegate = self
-        grindPicker.dataSource = self
+        createCoffeeImageView()
+        createCoffeeNameTitle()
+        createCoffeePriceLabel()
+        createCustomRGView()
+        
+        createRoastSegment()
         createBuyButton()
         createCustomStepper()
+        
+        
+       
+       
+       
+        
+    
+        
+        makeConstraints()
+       
+        
+        
     }
+    
+    private func createCoffeeImageView() {
+        coffeeImageView.contentMode = .scaleAspectFill
+        coffeeImageView.layer.cornerRadius = 12
+        coffeeImageView.backgroundColor = .blue
+        coffeeImageView.clipsToBounds = true
+        contentView.addSubview(coffeeImageView)
+        
+    }
+    
+    private func createCoffeeNameTitle() {
+        coffeeNameLabel.clipsToBounds = true
+        coffeeNameLabel.numberOfLines = 0
+        coffeeNameLabel.textAlignment = .center
+        coffeeNameLabel.backgroundColor = .yellow
+        coffeeNameLabel.font = UIFont.systemFont(ofSize: 18)
+        contentView.addSubview(coffeeNameLabel)
+    }
+    
+    private func createCoffeePriceLabel() {
+        coffeePriceLabel.clipsToBounds = true
+        coffeePriceLabel.numberOfLines = 2
+        coffeePriceLabel.textAlignment = .center
+        coffeePriceLabel.backgroundColor = .red
+        coffeePriceLabel.font = UIFont.systemFont(ofSize: 15)
+        coffeePriceLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        coffeePriceLabel.textColor = .bwtcOragge
+        contentView.addSubview(coffeePriceLabel)
+    }
+    
+    private func createCustomRGView() {
+        grindRoastView.backgroundColor = .green
+        contentView.addSubview(grindRoastView)
+    }
+    
+    func createRoastSegment() {
+            roastSegment = UISegmentedControl(items: roastArray)
+            roastSegment.backgroundColor = .clear
+            roastSegment.selectedSegmentTintColor = .bwtcOragge
+        contentView.addSubview(roastSegment)
+        
+        }
+    private func updateSegmentControl(with items: [String]) {
+            roastSegment.removeAllSegments()
+            for (index, item) in items.enumerated() {
+                roastSegment.insertSegment(withTitle: item, at: index, animated: false)
+            }
+            if !items.isEmpty {
+                roastSegment.selectedSegmentIndex = 0
+            }
+        roastSegment.selectedSegmentIndex = UISegmentedControl.noSegment
+        
+        }
+    
+    
+    
+    
+    
     
     private func createBuyButton() {
         buyButton.setTitle("Купити", for: .normal)
         buyButton.setTitleColor(.bwtcLightGrey, for: .normal)
         buyButton.backgroundColor = .bwtcOragge
         buyButton.tintColor = .bwtcOragge
+        buyButton.configuration?.cornerStyle = .large
+        
+        buyButton.clipsToBounds = true
+       
         buyButton.layer.cornerRadius = 12
         buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        contentView.addSubview(buyButton)
     }
     
     private func createCustomStepper() {
         customStepper.addTarget(self, action: #selector(didStepperValueChanged), for: .valueChanged)
+        customStepper.backgroundColor = .brown
+        contentView.addSubview(customStepper)
     }
     
     // MARK: Add Constraints
     func makeConstraints() {
-        shopImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            shopImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            shopImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.97),
-            shopImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.43),
-            shopImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
-        
-        shopName.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            shopName.topAnchor.constraint(equalTo: shopImageView.bottomAnchor, constant: 5),
-            shopName.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
-            shopName.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
-        
-        shopPrice.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            shopPrice.topAnchor.constraint(equalTo: shopName.bottomAnchor, constant: 0),
-            shopPrice.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1),
-            grindLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
-        
-        grindLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            grindLabel.topAnchor.constraint(equalTo: shopPrice.bottomAnchor, constant: 5),
-            grindLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1),
-            grindLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
-        
-        grindPicker.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            grindPicker.topAnchor.constraint(equalTo: grindLabel.bottomAnchor, constant: 0),
-            grindPicker.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
-            grindPicker.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.14),
-            grindPicker.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
-        ])
-        
+       coffeeImageView.translatesAutoresizingMaskIntoConstraints = false
+       coffeeNameLabel.translatesAutoresizingMaskIntoConstraints = false
+      coffeePriceLabel.translatesAutoresizingMaskIntoConstraints = false
+        grindRoastView.translatesAutoresizingMaskIntoConstraints = false
+        roastSegment.translatesAutoresizingMaskIntoConstraints = false
         customStepper.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            customStepper.topAnchor.constraint(equalTo: grindPicker.bottomAnchor, constant: 5),
-            customStepper.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.4),
-            customStepper.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.05),
-            customStepper.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6)
-        ])
         buyButton.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            buyButton.topAnchor.constraint(equalTo: grindPicker.bottomAnchor, constant: 5),
-            buyButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.4),
-            buyButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.08),
+           
+            
+            coffeeImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            coffeeImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.97),
+            coffeeImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.43),
+            coffeeImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            coffeeNameLabel.topAnchor.constraint(equalTo: coffeeImageView.bottomAnchor, constant: 5),
+            coffeeNameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
+            coffeeNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+        
+            coffeePriceLabel.topAnchor.constraint(equalTo: coffeeNameLabel.bottomAnchor, constant: 3),
+            coffeePriceLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1),
+            coffeePriceLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            grindRoastView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
+            grindRoastView.topAnchor.constraint(equalTo: coffeePriceLabel.bottomAnchor, constant: 10),
+            grindRoastView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            grindRoastView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.08),
+            
+            roastSegment.topAnchor.constraint(equalTo: grindRoastView.bottomAnchor, constant: 10),
+            roastSegment.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            roastSegment.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.7),
+            roastSegment.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.06),
+          
+            customStepper.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            customStepper.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.45),
+            customStepper.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.07),
+            customStepper.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
+
+         
+            buyButton.bottomAnchor.constraint(equalTo: customStepper.bottomAnchor),
+            buyButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.45),
+            buyButton.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.07),
             buyButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6)
         ])
     }
     
     @objc func buttonAction() {
-        guard let nameText = shopName.text,
+        guard let nameText = coffeeNameLabel.text,
               let image = shop?.imageName,
-              let grindText = pickerText.text,
+              let grindText = grindRoastView.grindMenuButton.titleLabel?.text,
               let salePrice = shop?.optPrice,
               let countDrip = shop?.countDrip,
               let identifaer = shop?.identifaer,
@@ -216,11 +268,13 @@ class ShopCollectionViewCell: UICollectionViewCell {
                                    countPackDrip: countPackDrip,
                                    mass: mass)
         BasketViewModel.shared.addPosition(position: position)
+        
         customStepper.firstValue = customStepper.resetValue(customStepper.firstValue)
-        grindPicker.reloadAllComponents()
-        resetPicker()
+      
+       // resetMenuButton()
         print(position.basketName)
         print(position.basketGrind)
+        print(roastArray)
     }
     
     
@@ -228,16 +282,36 @@ class ShopCollectionViewCell: UICollectionViewCell {
         
      }
     
-    func resetPicker() {
-        grindPicker.selectRow(0, inComponent: 0, animated: true)
-            pickerText.text = grindModel.tipeGrind[0].grind
-    }
+//    @objc func showMenu() {
+//        
+//                    let menuItems = grindModel.tipeGrind.map { grind in
+//                        UIAction(title: grind.grind) { action in
+//                            self.button.setAttributedTitle(NSAttributedString(string: action.title), for: .normal)
+//                        }
+//                    }
+//
+//                    button.menu = UIMenu(options: .displayInline, children: menuItems)
+//                    button.showsMenuAsPrimaryAction = true
+//    }
+//
+//    
+//    
+//    func resetMenuButton() {
+//        button.setAttributedTitle(NSAttributedString(string: "Помел"), for: .normal)
+//    }
+//    
+//    func actionClosure(action: UIAction) {
+//            pickerText.text = "\(action.title)"
+//            button.setTitle(pickerText.text, for: .normal)
+//        }
+    
     
 }
 
 
 //MARK: UIPickerDataSourse / Delegate
 
+@available(iOS 14.0, *)
 extension ShopCollectionViewCell: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -262,3 +336,6 @@ extension ShopCollectionViewCell: UIPickerViewDelegate, UIPickerViewDataSource {
 
 
 }
+
+
+

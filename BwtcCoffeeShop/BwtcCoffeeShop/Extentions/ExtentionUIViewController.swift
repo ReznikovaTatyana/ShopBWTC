@@ -7,10 +7,18 @@
 
 import UIKit
 
+
 extension UIViewController {
     
     func createCustomNavigationBar() {
         navigationController?.navigationBar.barTintColor = .bwtcOragge
+        let logoImageItem = createCustomTitleView()
+        navigationItem.titleView = logoImageItem
+        let backButton = UIBarButtonItem()
+            backButton.title = "Назад"  // Текст кнопки "Back"
+        backButton.tintColor = .bwtcGrey
+        navigationItem.backBarButtonItem = backButton// Колір тексту кнопки "Back"
+          
         
     }
     
@@ -39,15 +47,6 @@ extension UIViewController {
         titlelabel.frame = CGRect(x: 0, y: -20, width: 200, height: 50)
         let underlineView = UIView()
         underlineView.backgroundColor = .black
-        //view.addSubview(underlineView)
-
-//        underlineView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            underlineView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            underlineView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            underlineView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            underlineView.heightAnchor.constraint(equalToConstant: 1)
-//        ])
         view.addSubview(titlelabel)
         return view
     }
@@ -63,11 +62,19 @@ extension UIViewController {
         return languageBarItem
     }
     
-    func createSearch() {
-        let searchController = UISearchController()
-        searchController.searchBar.placeholder = "Search"
+    func createSearch() -> UISearchController {
+        let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
+        searchController.searchBar.placeholder = "Search"
         searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.tintColor = .bwtcGrey
+        definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        return searchController
+    
         
     }
     

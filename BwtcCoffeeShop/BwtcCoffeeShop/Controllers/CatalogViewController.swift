@@ -38,15 +38,18 @@ class CatalogViewController: UIViewController {
         createSearch()
         createCollectionView()
         makeConstraints()
-        createNavigationItem()
+       // createNavigationItem()
+        createCustomNavigationBar()
         
     }
     
     //MARK: - Метод для налаштування навігації
-    private func createNavigationItem() {
-        let logoImageItem = createCustomTitleView()
-        navigationItem.titleView = logoImageItem
-    }
+//    private func createNavigationItem() {
+//        let logoImageItem = createCustomTitleView()
+//        let navBar = createCustomNavigationBar()
+//        navigationItem.titleView = logoImageItem
+//       // navigationItem.backBarButtonItem = navBar
+//    }
     
     //MARK: - Метод для налаштування колекція категорій товарів
    private func createCollectionView() {

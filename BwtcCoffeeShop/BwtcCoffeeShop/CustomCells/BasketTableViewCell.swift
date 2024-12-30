@@ -167,7 +167,7 @@ class BasketTableViewCell: UITableViewCell {
         guard let coast = position?.basketCoast,
              let text = position?.coastSaleText,
               let stepper = position?.stepper,
-             // let optPrice = position?.basketSalePrice,
+              let optPrice = position?.basketSalePrice,
               let price = position?.basketPrice else {return}
         costLabel.text = String (coast) + "грн"
         costSaleLabel.text = text
