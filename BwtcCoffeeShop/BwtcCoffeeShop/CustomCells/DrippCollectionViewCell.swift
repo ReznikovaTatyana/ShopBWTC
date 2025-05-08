@@ -32,7 +32,7 @@ class DrippCollectionViewCell: UICollectionViewCell {
         price.textAlignment = .center
         price.font = UIFont.systemFont(ofSize: 15)
         price.font = UIFont.preferredFont(forTextStyle: .body)
-        price.textColor = .mainOragge
+        price.textColor = .bwtcOragge
         return price
     }()
     
@@ -42,7 +42,7 @@ class DrippCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
-    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+    let customStepper = CustomStepper(viewData: .init(color: .bwtcOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
         
     
     
@@ -75,7 +75,7 @@ class DrippCollectionViewCell: UICollectionViewCell {
           contentView.layer.cornerRadius = 12.0
           contentView.layer.borderWidth = 0.0
           contentView.clipsToBounds = true
-          contentView.layer.shadowColor = UIColor.tabBarItemAccent.cgColor
+          contentView.layer.shadowColor = UIColor.bwtcGrey.cgColor
           contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
           contentView.layer.shadowRadius = 4.0
           contentView.layer.shadowOpacity = 1
@@ -96,9 +96,9 @@ class DrippCollectionViewCell: UICollectionViewCell {
     
    private func createBuyButton() {
         buyButton.setTitle("Купити", for: .normal)
-        buyButton.setTitleColor(.tabBarItemLight, for: .normal)
-        buyButton.backgroundColor = .mainOragge
-        buyButton.tintColor = .mainOragge
+        buyButton.setTitleColor(.bwtcLightGrey, for: .normal)
+        buyButton.backgroundColor = .bwtcOragge
+        buyButton.tintColor = .bwtcOragge
         buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         buyButton.layer.cornerRadius = 12
     }

@@ -15,7 +15,7 @@ class TeaViewController: UIViewController {
                 layout.minimumLineSpacing = 10
                 layout.minimumInteritemSpacing = 10
                 layout.sectionInset = .init(top: 20, left: 10, bottom: 10, right: 10)
-                layout.collectionView?.backgroundColor = .mainOragge
+                layout.collectionView?.backgroundColor = .bwtcOragge
                 layout.collectionView?.clipsToBounds = true
             let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
             return cv
@@ -65,7 +65,7 @@ class TeaViewController: UIViewController {
                 itemCell.clipsToBounds = true
                 itemCell.layer.cornerRadius = 12.0
                 itemCell.layer.borderWidth = 0.0
-                itemCell.layer.shadowColor = UIColor.tabBarItemAccent.cgColor
+                itemCell.layer.shadowColor = UIColor.bwtcGrey.cgColor
                 itemCell.layer.shadowOffset = CGSize(width: 0, height: 0)
                 itemCell.layer.shadowRadius = 4.0
                 itemCell.layer.shadowOpacity = 1

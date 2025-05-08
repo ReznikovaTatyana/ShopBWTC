@@ -15,7 +15,8 @@ class AdressViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         setupView()
     }
     

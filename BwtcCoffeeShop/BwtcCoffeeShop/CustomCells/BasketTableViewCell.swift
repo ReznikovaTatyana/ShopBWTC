@@ -23,7 +23,7 @@ class BasketTableViewCell: UITableViewCell {
     var grindLabel = UILabel()
     var priceLabel = UILabel()
     var costLabel = UILabel()
-    var customStepper = CustomStepper(viewData:  .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+    var customStepper = CustomStepper(viewData:  .init(color: .bwtcOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
     
     var costSaleLabel = UILabel()
        
@@ -39,8 +39,8 @@ class BasketTableViewCell: UITableViewCell {
                   let grindText = position?.basketGrind,
                   let priceText = position?.basketPrice,
                   let stepper = position?.stepper,
-                  let text = position?.coastSaleText,
-                  let coast = position?.basketCoast else {return}
+                  let text = position?.coastSaleText else {return}
+                let coast = BasketViewModel.shared.calculateCost()
                 costLabel.text = String(coast) + "грн"
                 nameLabel.text = nameText
                 grindLabel.text = grindText
@@ -59,6 +59,7 @@ class BasketTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        textFunc()
         setupView()
         makeConstraints()
     }
@@ -78,7 +79,6 @@ class BasketTableViewCell: UITableViewCell {
         createGrindLabel()
         createPriceLabel()
         createCostSaleLabel()
-        textFunc()
         makeConstraints()
     }
     
@@ -96,19 +96,19 @@ class BasketTableViewCell: UITableViewCell {
     private func createGrindLabel() {
         grindLabel.translatesAutoresizingMaskIntoConstraints = false
         grindLabel.font = UIFont.systemFont(ofSize: 14)
-        grindLabel.textColor = .tabBarItemAccent
+        grindLabel.textColor = .bwtcGrey
     }
     
     private func createPriceLabel() {
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.font = UIFont.systemFont(ofSize: 14)
-        priceLabel.textColor = .mainOragge
+        priceLabel.textColor = .bwtcOragge
     }
     
     private func createCostSaleLabel() {
         costSaleLabel.translatesAutoresizingMaskIntoConstraints = false
         costSaleLabel.numberOfLines = 0
-        costSaleLabel.textColor = .mainOragge
+        costSaleLabel.textColor = .bwtcOragge
         costSaleLabel.font = UIFont.systemFont(ofSize: 14)
     }
     
@@ -151,13 +151,7 @@ class BasketTableViewCell: UITableViewCell {
         ])
     }
     
-//    private func addUnderline(label: UILabel) {
-//        label.attributedText = NSAttributedString(string: label.text ?? "" , attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.red])
-//    }
-//    
-//    private func removeUnderline(label: UILabel) {
-//        label.attributedText = NSAttributedString(string: label.text ?? "" , attributes: [.strikethroughStyle: NSUnderlineStyle.single.rawValue, .strikethroughColor: UIColor.clear])
-//    }
+
     
     func textFunc() {
         if costSaleLabel.text != "" {
@@ -173,9 +167,9 @@ class BasketTableViewCell: UITableViewCell {
         guard let coast = position?.basketCoast,
              let text = position?.coastSaleText,
               let stepper = position?.stepper,
-             // let optPrice = position?.basketSalePrice,
+              let optPrice = position?.basketSalePrice,
               let price = position?.basketPrice else {return}
-        costLabel.text = String (price * stepper) + "грн"
+        costLabel.text = String (coast) + "грн"
         costSaleLabel.text = text
         textFunc()
         delegate?.didStepperValueChanged(self, coast: coast, step: customStepper.firstValue, label: costLabel)

@@ -36,11 +36,12 @@ class ProfileTableViewCell: UITableViewCell {
     
     private func createImageLabel() {
         imageProfileCell.translatesAutoresizingMaskIntoConstraints = false
+        imageProfileCell.tintColor = .bwtcOragge
     }
     
     private func createProfileLabel() {
         profileLabelCell.translatesAutoresizingMaskIntoConstraints = false
-        profileLabelCell.textColor = .tabBarItemAccent
+        profileLabelCell.textColor = .bwtcGrey
         profileLabelCell.font = UIFont.systemFont(ofSize: 20)
         
     }
@@ -66,7 +67,7 @@ extension ProfileTableViewCell: ProfileCellProtocol {
     func configure(with profile: ProfileModel) {
         profileLabelCell.text = profile.label
         imageProfileCell.image = UIImage(systemName: profile.image)
-        imageProfileCell.tintColor = .tabBarItemAccent
+        imageProfileCell.tintColor = .bwtcGrey
     }
 }
 

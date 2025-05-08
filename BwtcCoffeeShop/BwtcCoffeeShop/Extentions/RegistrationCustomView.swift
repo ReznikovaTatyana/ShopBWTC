@@ -15,7 +15,7 @@ class RegistrationCustomView: UIControl {
     let buttonCustomView = UIButton()
     let containerCustomView = UIView()
     
-    weak var delegate: CustomViewDelegate?
+   
         
     
     struct ContainerData {
@@ -56,7 +56,7 @@ class RegistrationCustomView: UIControl {
     private func createLabelCustomView() {
         labelCustomView.translatesAutoresizingMaskIntoConstraints = false
         labelCustomView.text = conteinerData.labelText
-        labelCustomView.textColor = .mainOragge
+        labelCustomView.textColor = .bwtcOragge
         labelCustomView.textAlignment = .left
         labelCustomView.font = UIFont.systemFont(ofSize: 18)
     }
@@ -64,7 +64,7 @@ class RegistrationCustomView: UIControl {
     private func createImageViewCustomView() {
         imageViewCustomView.translatesAutoresizingMaskIntoConstraints = false
         imageViewCustomView.image = UIImage(systemName:  "chevron.right")
-        imageViewCustomView.tintColor = .mainOragge
+        imageViewCustomView.tintColor = .bwtcOragge
     }
     
     private func createContainerCustomView() {
@@ -72,7 +72,7 @@ class RegistrationCustomView: UIControl {
         containerCustomView.backgroundColor = .clear
         containerCustomView.layer.borderWidth = 1.0
         containerCustomView.layer.cornerRadius = 7
-        containerCustomView.layer.borderColor = UIColor.tabBarItemLight.cgColor
+        containerCustomView.layer.borderColor = UIColor.bwtcLightGrey.cgColor
     }
     
     private func makeConstraints() {
@@ -101,8 +101,8 @@ class RegistrationCustomView: UIControl {
     
     @objc func  newUserButtonAction(_ sender: UIButton) {
         switch conteinerData.labelText {
-        case "Я новий користувач":  delegate?.didTapNewUserButton()
-        case "У мене вже є акаунт": delegate?.didTapUserButton()
+        //case "Я новий користувач":  delegate?.didTapNewUserButton()
+       // case "У мене вже є акаунт": delegate?.didTapUserButton()
         default:
             break
         }
@@ -111,4 +111,65 @@ class RegistrationCustomView: UIControl {
 }
 
 
+extension UITextField {
+    
+    public func setPlaceholderPadding() {
+         let placeholderText = self.placeholder ?? ""
+         let attributedPlaceholder = NSAttributedString(
+             string: placeholderText,
+             attributes: [
+                 .font: self.font ?? UIFont.systemFont(ofSize: 17.0),
+                 .foregroundColor: UIColor.bwtcLightGrey
+             ]
+         )
+         self.attributedPlaceholder = attributedPlaceholder
+     }
+    
+    public func updateTextFields(placeholder: String, view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        textAlignment = .left
+        self.placeholder = placeholder
+        textColor = .black
+        layer.borderColor = UIColor.black.cgColor
+        borderStyle = .roundedRect
+        self.setPlaceholderPadding()
+        NSLayoutConstraint.activate([
+            centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1)])
+    }
+}
+
+extension UIButton {
+    
+    func customButton (title: String, view: UIView) {
+        setTitle(title, for: .normal)
+        setTitleColor(.bwtcLightGrey, for: .normal)
+        backgroundColor = .bwtcOragge
+        tintColor = .bwtcOragge
+        layer.cornerRadius = 10
+        NSLayoutConstraint.activate([
+            widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
+            centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+    }
+}
+
+extension UINavigationController {
+    func setupNavBarColor() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.bwtcOragge,
+        NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30)]
+        appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.bwtcOragge,
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 25)]
+        self.navigationBar.standardAppearance = appearance
+        self.navigationBar.scrollEdgeAppearance = appearance
+        self.navigationBar.compactAppearance = appearance
+        self.navigationBar.tintColor = .bwtcGrey
+        UIBarButtonItem.appearance().tintColor = .bwtcGrey
+        
+    }
+}
 

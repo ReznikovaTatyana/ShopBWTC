@@ -16,7 +16,7 @@ class DrippViewController: UIViewController {
             layout.minimumLineSpacing = 10
             layout.minimumInteritemSpacing = 10
             layout.sectionInset = .init(top: 20, left: 10, bottom: 10, right: 10)
-            layout.collectionView?.backgroundColor = .mainOragge
+            layout.collectionView?.backgroundColor = .bwtcOragge
             layout.collectionView?.clipsToBounds = true
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv

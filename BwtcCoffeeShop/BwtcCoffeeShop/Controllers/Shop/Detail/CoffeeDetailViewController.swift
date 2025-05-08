@@ -34,7 +34,7 @@ final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewContro
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 18)
         label.numberOfLines = 0
-        label.textColor = .mainOragge
+        label.textColor = .bwtcOragge
         return label
     }()
     
@@ -54,7 +54,7 @@ final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewContro
         return picker
     }()
 
-    let customStepper = CustomStepper(viewData: .init(color: .mainOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
+    let customStepper = CustomStepper(viewData: .init(color: .bwtcOragge, minimum: 1, maximum: 100, stepValue: 1, value: 1))
      
     
     var infoText = UILabel()
@@ -93,8 +93,8 @@ final class CoffeeDetailViewController: UIViewController, CoffeeDetailViewContro
     
     private func createBuyButton() {
         buyButton.setTitle("Kупити", for: .normal)
-        buyButton.setTitleColor(UIColor.tabBarItemLight, for: .normal)
-        buyButton.backgroundColor = .mainOragge
+        buyButton.setTitleColor(UIColor.bwtcLightGrey, for: .normal)
+        buyButton.backgroundColor = .bwtcOragge
         buyButton.layer.cornerRadius = 12
         buyButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     }

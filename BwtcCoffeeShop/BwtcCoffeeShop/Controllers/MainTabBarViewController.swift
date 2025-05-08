@@ -18,7 +18,7 @@ class MainTabBarViewController: UITabBarController {
     
  //MARK: Встановлює контролери для кожної вкладки в таббарі.
    private func setupTabBar() {
-        let mainPageViewController = createController(vc: FirstScreenViewController(), itemName: "Home" , itemImage: "house.fill")
+        let mainPageViewController = createController(vc: HomeViewController(), itemName: "Home" , itemImage: "house.fill")
         let catalogViewController = createController(vc: CatalogViewController(), itemName: "Shop", itemImage: "rectangle.grid.2x2")
         let basketViewController = createController(vc: BasketViewController(), itemName: "Bask", itemImage: "cart.fill")
         let profileViewController = createController(vc: ProfileViewController(), itemName: "Profile", itemImage: "person.fill")
@@ -40,10 +40,10 @@ class MainTabBarViewController: UITabBarController {
     //MARK: Налаштовує зовнішній вигляд та елементи керування таббару.
     private func setTabBarAppearence() {
         tabBar.itemPositioning = .centered
-        tabBar.tintColor = .tabBarItemAccent
-        tabBar.unselectedItemTintColor = .tabBarItemLight
-        tabBar.backgroundColor = .mainOragge
-    }    
+        tabBar.tintColor = .bwtcGrey
+        tabBar.unselectedItemTintColor = .bwtcLightGrey
+        tabBar.backgroundColor = .bwtcOragge
+    }
 }
     
    

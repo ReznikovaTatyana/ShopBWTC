@@ -20,68 +20,90 @@ class CoffeeViewController: UIViewController {
             layout.minimumLineSpacing = 10
             layout.minimumInteritemSpacing = 10
             layout.sectionInset = .init(top: 20, left: 10, bottom: 10, right: 10)
-            layout.collectionView?.backgroundColor = .mainOragge
+            layout.collectionView?.backgroundColor = .bwtcOragge
             layout.collectionView?.clipsToBounds = true
             layout.headerReferenceSize = .init(width: 400, height: 40)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv
         }()
     
+    let noResultsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No results found"
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true // Початково ховаємо мітку
+        return label
+    }()
+    
+    lazy var searchController = createSearch()
     lazy var contentCoffeeShopCell: ShopViewModel = ShopViewModel()
     let detailViewController = CoffeeDetailViewController()
-    lazy var sourse: [SectionCoffee] = [
-        SectionCoffee(sectionName: "Pack 250gr", coffee: contentCoffeeShopCell.packCoffeeArray),
-        SectionCoffee(sectionName: "Pack 1gr", coffee: contentCoffeeShopCell.bigPackArray) ]
-
+    private var filterCategories = [Goods]()
    
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else {return false}
+        return text.isEmpty
+    }
     
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupViews()
         addFirebase()
-        
+        createCustomNavigationBar()
     }
     
     
     func setupViews() {
+        view.addSubview(collectionViewCoffee)
+        createCollectionView()
+        installNavigationBar()
+        //create()
+    }
+    
+    private func installNavigationBar() {
         let segmentLanguageItem = customSegment()
         let logoImageItem = createCustomTitleView()
         navigationItem.rightBarButtonItem = segmentLanguageItem
         navigationItem.titleView = logoImageItem
-        view.addSubview(collectionViewCoffee)
-        createSearch()
-        createCollectionView()
+        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
     }
-
+    
+    
     
     func addFirebase() {
         collectionViewCoffee.reloadData()
-        
         self.contentCoffeeShopCell.updateGoodsFromFirebase { [weak self] in
-            
-            
             self?.collectionViewCoffee.reloadData()
             print(self?.contentCoffeeShopCell.packCoffeeArray.count ?? 0)
         }
             self.contentCoffeeShopCell.updateGoodsFromFirebaseBigPack { [weak self] in
                 self?.collectionViewCoffee.reloadData()
                 print(self?.contentCoffeeShopCell.bigPackArray.count ?? 0)
-            
         }
-        
     }
     
     
     
     func createCollectionView() {
         collectionViewCoffee.layer.shadowRadius = 10
+       
         collectionViewCoffee.dataSource = self
         collectionViewCoffee.delegate = self
-        
         collectionViewCoffee.reloadData()
-        collectionViewCoffee.register(ShopCollectionViewCell.self, forCellWithReuseIdentifier: "\(ShopCollectionViewCell.self)")
+        if #available(iOS 14.0, *) {
+            collectionViewCoffee.register(ShopCollectionViewCell.self, forCellWithReuseIdentifier: "\(ShopCollectionViewCell.self)")
+        } else {
+            // Fallback on earlier versions
+        }
         collectionViewCoffee.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderCollectionReusableView.self)")
         
         collectionViewCoffee.translatesAutoresizingMaskIntoConstraints = false
@@ -97,31 +119,27 @@ class CoffeeViewController: UIViewController {
 }
 
 extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sourse.count
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0: return contentCoffeeShopCell.packCoffeeArray.count
-        case 1: return contentCoffeeShopCell.bigPackArray.count
-        default: break
-        }
-        return section
+        if isFiltering {
+            return filterCategories.count
+        } 
+        return contentCoffeeShopCell.packCoffeeArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
-            switch indexPath.section {
-            case 0:
-                itemCell.shop = contentCoffeeShopCell.packCoffeeArray[indexPath.item]
-            case 1:
-                itemCell.shop = contentCoffeeShopCell.bigPackArray[indexPath.item]
-            default: break
+        if #available(iOS 14.0, *) {
+            if let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
+                if isFiltering {
+                    itemCell.shop = filterCategories[indexPath.row]
+                } else {
+                    itemCell.shop = contentCoffeeShopCell.packCoffeeArray[indexPath.row]
+                }
+                return itemCell
             }
-            
-            return itemCell
-            }
+        } else {
+            // Fallback on earlier versions
+        }
         return UICollectionViewCell()
     }
     
@@ -132,7 +150,7 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
             guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(HeaderCollectionReusableView.self)", for: indexPath) as? HeaderCollectionReusableView else {
                 return UICollectionReusableView()
             }
-            view.titleLabel.text = sourse[indexPath.section].sectionName
+            view.titleLabel.text = "Coffee"
             return view
         default: return UICollectionReusableView()
         }
@@ -141,31 +159,21 @@ extension CoffeeViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)  {
         
-        if let menu = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
-            switch indexPath.section {
-            case 0:
-                menu.shop = contentCoffeeShopCell.packCoffeeArray[indexPath.row]
-                detailViewController.coffeeGoods = menu.shop
-                detailViewController.labelName.text = menu.shopName.text
-                detailViewController.imageView.image = menu.shopImageView.image
-                detailViewController.labelPrice.text = menu.shopPrice.text
-                //detailViewController.textLabel.text = menu.textLabel.text
-                detailViewController.infoText.text = menu.textLabel.text
-                     navigationController?.pushViewController(detailViewController, animated: true)
-            case 1:
-                menu.shop = contentCoffeeShopCell.bigPackArray[indexPath.row]
-                detailViewController.coffeeGoods = menu.shop
-                detailViewController.labelName.text = menu.shopName.text
-                detailViewController.imageView.image = menu.shopImageView.image
-                detailViewController.labelPrice.text = menu.shopPrice.text
-               // detailViewController.textLabel.text = menu.textLabel.text
+       
+            if let menu = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ShopCollectionViewCell.self)", for: indexPath) as? ShopCollectionViewCell {
+                let shop: Goods
+                if isFiltering {
+                    menu.shop = filterCategories[indexPath.item]
+                } else {
+                    menu.shop  = contentCoffeeShopCell.packCoffeeArray[indexPath.item]
+                }
+                detailViewController.coffeeGoods =  menu.shop
+                detailViewController.labelName.text = menu.coffeeNameLabel.text
+                detailViewController.imageView.image = menu.coffeeImageView.image
+                detailViewController.labelPrice.text = menu.coffeePriceLabel .text
                 detailViewController.infoText.text = menu.textLabel.text
                 navigationController?.pushViewController(detailViewController, animated: true)
-            default:
-                break
             }
-            
-        }
         
         }
     }
@@ -180,7 +188,29 @@ extension CoffeeViewController:  UICollectionViewDelegateFlowLayout {
                         let cellWidth = screenWidth * 0.45
             let cellHeight = screenHeight  * 0.5
             return CGSize(width: cellWidth, height: cellHeight)
-
         }
     }
         
+extension CoffeeViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+
+    private func filterContentForSearchText(_ searchText: String) {
+        
+        filterCategories = contentCoffeeShopCell.packCoffeeArray.filter({ (category: Goods) in
+            return category.name!.lowercased().contains(searchText.lowercased())
+        })
+        
+        collectionViewCoffee.reloadData()
+        
+        if filterCategories.isEmpty && !searchBarIsEmpty {
+               noResultsLabel.isHidden = false // Показуємо мітку, якщо немає результатів
+           } else {
+               noResultsLabel.isHidden = true // Ховаємо мітку, якщо є результати
+           }
+      
+           
+    }
+    
+}

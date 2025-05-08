@@ -2,108 +2,121 @@
 //  RegistrationViewController.swift
 //  BwtcCoffeeShop
 //
-//  Created by mac on 18.02.2024.
+//  Created by mac on 03.03.2024.
 //
-
+import Foundation
 import UIKit
-
-protocol CustomViewDelegate: AnyObject {
-    func didTapNewUserButton()
-    func didTapUserButton()
-}
+import FirebaseAuth
+import FirebaseFirestore
 
 
-class RegistrationViewController: UIViewController, CustomViewDelegate {
+class RegistrationViewController: UIViewController {
     
-    
-    let logoImageView = UIImageView()
-    let cancelButton = UIButton()
-    let facebookLogin = UIButton()
-    let googleLogin = UIButton()
-    
-   let newUserView = RegistrationCustomView(conteinerData: .init(labelText: "Я новий користувач"))
-    
-    let userView  = RegistrationCustomView(conteinerData: .init(labelText: "У мене вже є акаунт"))
-      
+    //let registrationLabel = UILabel()
+    let surnameTextField = UITextField()
+    let nameTextField = UITextField()
+    let phoneTextField = UITextField()
+    let emailTextField = UITextField()
+    let passwordTextField = UITextField()
+    let registrationButton = UIButton()
+   
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        newUserView.delegate = self
-        userView.delegate = self
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         setupView()
     }
     
     private func setupView() {
-        view.addSubview(newUserView)
-        view.addSubview(logoImageView)
-        view.addSubview(userView)
-        view.addSubview(cancelButton)
-        view.addSubview(facebookLogin)
-        view.addSubview(googleLogin)
-        createLogoImageView()
-        createCancelButton()
-        createFacebookLogin()
-        createGoogleLogin()
+        view.addSubview(surnameTextField)
+        view.addSubview(nameTextField)
+        view.addSubview(phoneTextField)
+        view.addSubview(emailTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(registrationButton)
+       // view.addSubview(registrationLabel)
+        nav()
+        createSurnameTextField()
+        createRegistrationButton()
+       // createRegistrationLabel()
         makeConstraints()
+        
     }
+    func nav() {
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
+        self.navigationController?.setupNavBarColor()
+        let logoImageItem = "Реєстрація"
+        navigationItem.title = logoImageItem
+    }
+    
+    private func createSurnameTextField() {
+        surnameTextField.updateTextFields(placeholder: "Прізвище", view: self.view)
+        nameTextField.updateTextFields(placeholder: "Ім'я", view:  self.view)
+        phoneTextField.updateTextFields(placeholder: "Мобільний телефон", view:  self.view)
+        emailTextField.updateTextFields(placeholder: "Ел.пошта", view:  self.view)
+        passwordTextField.updateTextFields(placeholder:  "Пароль", view:  self.view)
+    }
+    
+    
+    
+    private func createRegistrationButton() {
+        registrationButton.translatesAutoresizingMaskIntoConstraints = false
+        registrationButton.customButton(title: "Зареєструватися", view: self.view)
+        registrationButton.addTarget(self, action: #selector(registrationButtonAction), for: .touchUpInside)
+    }
+    
 
-    
-    private func createLogoImageView() {
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(named: "2023-04-23 11.19.26")
-        logoImageView.clipsToBounds = true
-        logoImageView.layer.cornerRadius = 35
-    
-    }
-
-    private func createCancelButton() {
-        
-    }
-    
-    private func createFacebookLogin() {
-        
-    }
-    
-    private func createGoogleLogin() {
-        
-    }
-    
     private func makeConstraints() {
-        
-        newUserView.translatesAutoresizingMaskIntoConstraints = false
-        userView.translatesAutoresizingMaskIntoConstraints = false
-     
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
-            logoImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
-            logoImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.55),
-            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            surnameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 170),
+            nameTextField.topAnchor.constraint(equalTo: surnameTextField.bottomAnchor, constant: 20),
             
-            newUserView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 50),
-            newUserView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            newUserView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1),
-            newUserView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            phoneTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 20),
+            emailTextField.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor, constant: 20),
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 20),
             
-            userView.topAnchor.constraint(equalTo: newUserView.bottomAnchor, constant: 35),
-            userView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            userView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1),
-            userView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-       
+            registrationButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30)
         ])
+    }
+    
+    @objc func registrationButtonAction() {
+        let registerUserRequest = RegisterUser(firstUserName: nameTextField.text ?? "", lastUserName: surnameTextField.text ?? "", email: emailTextField.text ?? "", phone: phoneTextField.text ?? "", password: passwordTextField.text ?? "")
         
-    }
-    
-    
-    func didTapNewUserButton() {
-            let viewController = PaymentDeliveryViewController()
-            navigationController?.pushViewController(viewController, animated: true)
+        if !Validator.isValidUserName(for: registerUserRequest.firstUserName) {
+            AlertManager.shared.showInvalidUsernameAlert(vc: self)
+            return
         }
-    
-    func didTapUserButton() {
-        let viewController = AdressViewController()
-        navigationController?.pushViewController(viewController, animated: true)
-    }
+        
+        if !Validator.isValidEmail(for: registerUserRequest.email) {
+            AlertManager.shared.showInvalidEmailAlert(vc: self)
+            return
+        }
+        
+        if !Validator.isValidPassword(for: registerUserRequest.password) {
+            AlertManager.shared.showInvalidPasswordAlert(vc: self)
+            return
+        }
+        AuthService.shared.registerUser(with: registerUserRequest) { [weak self] wasRegistered, error in
+            guard let self = self else {return}
+            if let error = error {
+                AlertManager.shared.showRegistrationErrorAlert(on: self,with: error)
+            }
+            
+            if wasRegistered {
+                if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
 
+                }
+            } else {
+                AlertManager.shared.showRegistrationErrorAlert(on: self)
+            }
+        }
+
+        print(registerUserRequest)
+    }
     
 }
+
+

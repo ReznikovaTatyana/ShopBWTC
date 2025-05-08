@@ -44,7 +44,7 @@ class CatalogCollectionViewCell: UICollectionViewCell {
           contentView.layer.cornerRadius = 15.0
           contentView.layer.borderWidth = 0.0
           contentView.clipsToBounds = true
-          contentView.layer.shadowColor = UIColor.tabBarItemAccent.cgColor
+          contentView.layer.shadowColor = UIColor.bwtcGrey.cgColor
           contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
           contentView.layer.shadowRadius = 4.0
           contentView.layer.shadowOpacity = 1
@@ -81,7 +81,7 @@ class CatalogCollectionViewCell: UICollectionViewCell {
         ])
         categoryName.numberOfLines = 2
         categoryName.textAlignment = .center
-        categoryName.textColor = .mainOragge
+        categoryName.textColor = .bwtcOragge
         categoryName.font = UIFont.systemFont(ofSize: 25)
     }
     

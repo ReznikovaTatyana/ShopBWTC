@@ -14,7 +14,7 @@ class HeaderHomeView: UICollectionReusableView {
         label.text = "header"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .tabBarItemLight
+        label.textColor = .bwtcLightGrey
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

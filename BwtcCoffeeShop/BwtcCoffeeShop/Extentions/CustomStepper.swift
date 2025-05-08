@@ -72,9 +72,9 @@ class CustomStepper: UIControl {
         plusButton.addTarget(self, action: #selector(buttonTappedPlus(_:)), for: .touchUpInside)
         plusButton.setTitle("+", for: .normal)
         plusButton.layer.cornerRadius = 12
-        plusButton.setTitleColor(.tabBarItemLight, for: .normal)
-        plusButton.backgroundColor = .mainOragge
-        plusButton.tintColor = .mainOragge
+        plusButton.setTitleColor(.bwtcLightGrey, for: .normal)
+        plusButton.backgroundColor = .bwtcOragge
+        plusButton.tintColor = .bwtcOragge
         
     }
     
@@ -82,8 +82,8 @@ class CustomStepper: UIControl {
         minusButton.addTarget(self, action: #selector(buttonTappedMinus(_:)), for: .touchUpInside)
         minusButton.setTitle("-", for: .normal)
         minusButton.layer.cornerRadius = 12
-        minusButton.setTitleColor(.tabBarItemLight, for: .normal)
-        minusButton.backgroundColor = .mainOragge
+        minusButton.setTitleColor(.bwtcLightGrey, for: .normal)
+        minusButton.backgroundColor = .bwtcOragge
     }
     
     func updateValuePlus(_ value: Int) {

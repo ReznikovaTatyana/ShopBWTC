@@ -10,13 +10,13 @@ import UIKit
 class HeaderCollectionReusableView: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.layer.borderColor = UIColor.tabBarItemLight.cgColor
+        label.layer.borderColor = UIColor.bwtcLightGrey.cgColor
         label.layer.borderWidth = 2
         label.layer.cornerRadius = 15
         label.clipsToBounds = true
-        label.textColor = .mainOragge
+        label.textColor = .bwtcOragge
         label.textAlignment = .center
-        label.backgroundColor = .tabBarItemLight
+        label.backgroundColor = .bwtcLightGrey
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 24)

@@ -24,6 +24,7 @@ struct Goods {
     var mass: Int?
     var text: String?
     var identifaer: Int?
+    var roast: [String]?
 }
 
 protocol GoodsForShopProtocol {
